@@ -16,10 +16,13 @@ public class Answer extends QuestionActivity{
 	
 	private String value;
 	
+	private boolean deleted;
+	
 	
 	public Answer(Question question, Survey survey, String value) {
 		super(question, survey);
 		this.value = value;
+		deleted = Boolean.FALSE;
 	}
 
 	
@@ -35,8 +38,34 @@ public class Answer extends QuestionActivity{
 	public void setValue(String value) {
 		this.value = value;
 	}
+	
+	
 
 
+
+
+
+	public String getId() {
+		return id;
+	}
+
+
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 
 
 

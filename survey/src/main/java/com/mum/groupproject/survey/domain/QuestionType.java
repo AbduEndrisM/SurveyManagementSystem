@@ -5,6 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.*;
 
 @Entity
@@ -23,9 +24,17 @@ public class QuestionType implements Serializable{
 	@Transient
 	private  List<Question> typeQuestions;
 	
+	private boolean deleted;
+	
+	private Timestamp recordedDate;
+	
+	
+	
 	
 	public QuestionType() {
 		typeQuestions = new ArrayList<>();
+		deleted = Boolean.FALSE;
+		recordedDate = new Timestamp(System.currentTimeMillis());
 	}
 
 	public String getUuid() {
@@ -58,6 +67,22 @@ public class QuestionType implements Serializable{
 
 	public void setTypeQuestions(List<Question> typeQuestions) {
 		this.typeQuestions = typeQuestions;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
+
+	public Timestamp getRecordedDate() {
+		return recordedDate;
+	}
+
+	public void setRecordedDate(Timestamp recordedDate) {
+		this.recordedDate = recordedDate;
 	}
 	
 	

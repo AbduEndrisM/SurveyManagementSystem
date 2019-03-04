@@ -15,10 +15,13 @@ public class Rate extends QuestionActivity{
 	
 	
 	private int value;
+	
+	private boolean deleted;
 
 	public Rate(Question question, Survey survey,int value) {
 		super(question, survey);
 		this.value = value;
+		deleted = Boolean.FALSE;
 	}
 	
 	
@@ -45,6 +48,20 @@ public class Rate extends QuestionActivity{
 
 	public void setId(String id) {
 		this.id = id;
+	}
+	
+	
+
+
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 
