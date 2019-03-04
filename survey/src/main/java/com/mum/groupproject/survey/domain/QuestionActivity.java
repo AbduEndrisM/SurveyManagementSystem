@@ -1,11 +1,81 @@
 package com.mum.groupproject.survey.domain;
 
-import java.util.UUID;
+import java.io.Serializable;
+import java.sql.Timestamp;
 
-public class QuestionActivity {
+import javax.persistence.MappedSuperclass;
+
+@MappedSuperclass
+public abstract class QuestionActivity implements Serializable{
 	
 	
-	private String id = UUID.randomUUID().toString();
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+
+	private Question question;
+	
+	
+    private Survey survey;
+    
+    private Timestamp recordedDate;
+    
+    
+    
+    
+    public QuestionActivity(final Question question,final Survey survey) {
+    	
+    	
+    	assert question!= null : "Please, question can't be null";
+    	assert survey!= null : "Please survey can't be null";
+    	
+    	
+    	this.question = question;
+    	this.survey = survey;
+    	this.recordedDate = new Timestamp(System.currentTimeMillis());
+    }
+    
+    
+    abstract String createActivity(final QuestionActivity activity);
+    
+    abstract String updateActivity(final QuestionActivity activity);
+    
+   
+
+	public Question getQuestion() {
+		return question;
+	}
+
+
+	public void setQuestion(Question question) {
+		this.question = question;
+	}
+
+
+	public Survey getSurvey() {
+		return survey;
+	}
+
+
+	public void setSurvey(Survey survey) {
+		this.survey = survey;
+	}
+
+
+	public Timestamp getRecordedDate() {
+		return recordedDate;
+	}
+
+
+	public void setRecordedDate(Timestamp recordedDate) {
+		this.recordedDate = recordedDate;
+	}
+
+
+	
 	
 	
 

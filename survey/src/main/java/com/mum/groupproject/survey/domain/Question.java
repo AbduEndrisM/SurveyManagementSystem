@@ -5,11 +5,16 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.*;
 
 @Entity
-public class Question {
+public class Question implements Serializable{
 	
+	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	private String id = UUID.randomUUID().toString();
 	
@@ -28,6 +33,10 @@ public class Question {
 	@Transient
 	private  List<Question> subquestions;
 	
+	private Timestamp recordedDate;
+	
+	private boolean deleted;
+	
 	
 	public Question(final Survey survey,final QuestionType type) {
 		//checking if the survey and questionType are not null
@@ -38,6 +47,8 @@ public class Question {
 		this.survey = survey;
 		this.questionType = type;
 		this.subquestions = new ArrayList<>();
+		this.recordedDate = new Timestamp(System.currentTimeMillis());
+		this.deleted = Boolean.FALSE;
 	}
 
 	public String getId() {
@@ -94,6 +105,22 @@ public class Question {
 
 	public void setQuestionType(QuestionType questionType) {
 		this.questionType = questionType;
+	}
+
+	public Timestamp getRecordedDate() {
+		return recordedDate;
+	}
+
+	public void setRecordedDate(Timestamp recordedDate) {
+		this.recordedDate = recordedDate;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 	
 	
