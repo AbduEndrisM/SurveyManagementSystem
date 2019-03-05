@@ -8,10 +8,12 @@ import java.util.*;
 @Repository
 public class SurveyDao extends GenericDao<Survey>{
 	
-	public List<Survey> allSurveys(){
+	public List<Survey> allSurveys() {
 		List<Survey> list = new ArrayList<>();
-		for(Survey survey:allObejcts()) {
-			list.add(survey);
+		for (Survey survey : allObejcts()) {
+			if (!survey.isDeleted()) {
+				list.add(survey);
+			}
 		}
 		return list;
 	}

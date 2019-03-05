@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.*;
 
 @Entity
@@ -24,6 +25,15 @@ public class Survey implements Serializable{
 	private Date openDate;
 	
 	private Date endDate;
+	
+	private Timestamp recordedDate;
+	
+	private boolean deleted;
+	
+	public Survey() {
+		this.recordedDate = new Timestamp(System.currentTimeMillis());
+		this.deleted = Boolean.FALSE;
+	}
 
 	public String getId() {
 		return id;
@@ -64,9 +74,22 @@ public class Survey implements Serializable{
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-	
-	
-	
+
+	public Timestamp getRecordedDate() {
+		return recordedDate;
+	}
+
+	public void setRecordedDate(Timestamp recordedDate) {
+		this.recordedDate = recordedDate;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}
 	
 
 }
