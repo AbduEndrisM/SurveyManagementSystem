@@ -11,8 +11,8 @@ import com.mum.groupproject.survey.domain.QuestionType;
 import com.mum.groupproject.survey.iservice.IQuestionType;
 import com.mum.groupproject.survey.utility.Messages;
 
-@Transactional
 @Service
+@Transactional
 public class QuestionTypeService implements IQuestionType{
 	
 	
