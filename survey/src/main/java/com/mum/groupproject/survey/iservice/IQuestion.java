@@ -12,7 +12,10 @@ public interface IQuestion {
 	String update(final Question quesiton);
 	
 	String delete(final Question quesiton);
+
 	
 	List<Question> surveyQuestion(final Survey survey);
+	
+	Question findOne(final String id);
 
 }

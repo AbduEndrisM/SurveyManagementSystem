@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mum.groupproject.survey.dao.QuestionDao;
+import com.mum.groupproject.survey.dao.SurveyDao;
 import com.mum.groupproject.survey.domain.Question;
 import com.mum.groupproject.survey.domain.Survey;
 import com.mum.groupproject.survey.iservice.IQuestion;
@@ -17,7 +19,10 @@ import com.mum.groupproject.survey.utility.Messages;
 @Transactional
 public class QuestionService implements IQuestion{
 
+	@Autowired
 	private QuestionDao questionDao;
+	
+	
 	
 	@Override
 	public String create(Question question) {
@@ -52,8 +57,12 @@ public class QuestionService implements IQuestion{
 
 	@Override
 	public List<Question> surveyQuestion(Survey survey) {
-		// TODO Auto-generated method stub
-		return null;
+		return questionDao.surveyQuestions(survey);
+	}
+
+	@Override
+	public Question findOne(String id) {
+		return questionDao.findOne(id);
 	}
 
 }

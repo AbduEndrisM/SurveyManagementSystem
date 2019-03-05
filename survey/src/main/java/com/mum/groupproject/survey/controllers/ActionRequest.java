@@ -14,6 +14,7 @@ import com.mum.groupproject.survey.domain.Choice;
 import com.mum.groupproject.survey.domain.Question;
 import com.mum.groupproject.survey.domain.QuestionType;
 import com.mum.groupproject.survey.domain.Survey;
+import com.mum.groupproject.survey.iservice.IChoice;
 import com.mum.groupproject.survey.iservice.IQuestion;
 import com.mum.groupproject.survey.iservice.IQuestionType;
 import com.mum.groupproject.survey.iservice.ISurvey;
@@ -31,12 +32,14 @@ public class ActionRequest {
 	@Autowired
 	private IQuestion questionService;
 
+	private IChoice choiceService;
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String landing() {
 		return "welcome to survey system";
 	}
 
-	@RequestMapping(value = "formSubmission/{option}")
+	@RequestMapping(value = "formSubmission/{option}", method = RequestMethod.POST)
 	public String create(@PathVariable("option") String option, Map<String, String> map) {
 		String result = "";
 		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
@@ -55,8 +58,12 @@ public class ActionRequest {
 				q.setName(map.get("name"));
 				q.setDescription(map.get("description"));
 				result = questionService.create(q);
-			}else if(option.equals("choice")) {
-				
+			} else if (option.equals("choice")) {
+				Question question = questionService.findOne(map.get("questionId"));
+				Choice choice = new Choice(question);
+				choice.setValue(map.get("value"));
+				choice.setDescription(map.get("description"));
+				result = choiceService.create(choice);
 			}
 		} catch (Exception e) {
 			result = Messages.exception;
