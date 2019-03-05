@@ -14,5 +14,8 @@ public interface ISurvey {
 	
 	List<Survey> allSurveys();
 	
+	
+	Survey findOne(final String id);
+	
 
 }

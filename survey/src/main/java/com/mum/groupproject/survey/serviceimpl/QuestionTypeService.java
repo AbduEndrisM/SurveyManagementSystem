@@ -54,4 +54,9 @@ public class QuestionTypeService implements IQuestionType{
 		return typeDao.allTypes();
 	}
 
+	@Override
+	public QuestionType findOne(String id) {
+		return typeDao.findOne(id);
+	}
+
 }

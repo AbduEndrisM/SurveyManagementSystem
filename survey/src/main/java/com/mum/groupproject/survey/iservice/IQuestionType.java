@@ -13,5 +13,7 @@ public interface IQuestionType {
 	String delete(final QuestionType type);
 	
 	List<QuestionType> allTypes();
+	
+	QuestionType findOne(final String id);
 
 }

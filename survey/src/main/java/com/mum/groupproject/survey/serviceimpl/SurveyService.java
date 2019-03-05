@@ -54,4 +54,9 @@ public class SurveyService implements ISurvey{
 		return surveyDao.allSurveys();
 	}
 
+	@Override
+	public Survey findOne(String id) {
+		return surveyDao.findOne(id);
+	}
+
 }
