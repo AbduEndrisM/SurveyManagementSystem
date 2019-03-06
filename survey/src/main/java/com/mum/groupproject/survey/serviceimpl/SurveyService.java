@@ -24,7 +24,8 @@ public class SurveyService implements ISurvey{
 			surveyDao.create(survey);
 			return Messages.save;
 		} catch (Exception e) {
-			return Messages.exception;
+			e.printStackTrace();
+			return e.getLocalizedMessage();
 		}
 	}
 

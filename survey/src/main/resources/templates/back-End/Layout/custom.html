@@ -1,0 +1,119 @@
+<div th:fragment="myScript">
+	<script src="/js/jquery.min.js"></script>
+<!-- 	<script src="/js/jquery.timepicker.js"></script> -->
+	<script src="/js/jquery.validate.min.js"></script>
+	<script src="/js/jquery.masknumber.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/moment.min.js"></script>
+	<script src="/js/daterangepicker.min.js"></script>
+
+	<script src="/js/fancybox.min.js"></script>
+	<script src="/js/app.js"></script>
+
+	<script src="/js/uploaders/fileinput.min.js"></script>
+
+	<script src="/js/full.min.js"></script>
+	
+	<script src="/js/jquerysession.js"></script>
+
+
+	<script src="/js/pnotify.min.js"></script>
+	<script src="/js/forms/select2.min.js"></script>
+	<script src="/js/datatables/datatables.min.js"></script>
+	<script src="/js/login.js"></script>
+	<script src="/js/anotherCustom.js"></script>
+	<script src="/js/custom1.js"></script>
+	<script src="/js/custom.js"></script>
+	<script src="/js/picking.js"></script>
+	<script src="/js/Alert/alert.js" type="text/javascript"></script>
+	<script src="/js/charts/google/jsapi.js"></script>
+	<script src="/js/charts/google/pies.js"></script>
+
+	<script src="/js/datatables/datatables.min.js"></script>
+	<script src="/js/datatables/extensions/buttons.min.js"></script>
+	<!-- For data tables -->
+	
+	<!-- Jquery maxlength counter -->
+	<script src="/js/jQuery.maxlength.js"></script>
+	
+	<!--  Data table printing options-->
+	<script src="/DataTablesLibrary/dataTables.buttons.min.js" type="text/javascript"></script>		
+		<script src="/DataTablesLibrary/buttons.flash.min.js" type="text/javascript"></script>		
+		<script src="/DataTablesLibrary/jszip.min.js" type="text/javascript"></script>		
+		<script src="/DataTablesLibrary/pdfmake.min.js" type="text/javascript"></script>		
+		<script src="/DataTablesLibrary/vfs_fonts.js" type="text/javascript"></script>		
+		<script src="/DataTablesLibrary/buttons.html5.min.js" type="text/javascript"></script>		
+		<script src="/DataTablesLibrary/buttons.print.min.js" type="text/javascript"></script>	 	
+		
+		<!-- Select2 -->
+		
+
+	<script>
+		$(document).ready(
+				function() {
+
+					$('.numbers').maskNumber();
+
+					$('.numbers').maskNumber({
+						decimal : '_'
+					});
+
+					$('#projectAmount').maskNumber({
+						thousands : ','
+					});
+
+					$('.numbers').maskNumber({
+						integer : true,
+						decimal : true,
+					});
+
+					$('.file-input').fileinput({
+					/* browseLabel: 'Browse',
+					browseIcon: '<i class="fa fa-file-o position-left"></i>',						
+					removeIcon: '<i class="fa fa-close position-left"></i>',
+					layoutTemplates: {
+						icon: '<i class="fa fa-file position-left"></i>'
+					},
+					initialCaption: "No file selected" */
+					});
+
+					$('.datatable').DataTable({
+						lengthMenu : [ 3, 5, 10, 25, 50, 75, 100 ],
+						displayLength : 10,
+						dom: 'Bfrtip',
+						buttons: [
+					       	   {
+					       	        extend: 'excel',
+					       	        text: ' EXCEL',
+					       	        className: 'btn btn-default',
+					       	        exportOptions: {
+					       	            columns: 'th:not(:last-child)'
+					       	        }
+					       	    },
+					       	 {
+					       	        extend: 'pdf',
+					       	        text: ' PDF',
+					       	        className: 'btn btn-default',
+					       	        exportOptions: {
+					       	            columns: 'th:not(:last-child)'
+					       	        }
+					       	    },
+					       	    
+					       	    ]
+					});
+
+					$('.dataTables_length select').select2({
+						minimumResultsForSearch : Infinity,
+						width : '60px'
+					});
+
+					$('.dataTables_filter input[type=search]').attr(
+							'placeholder', 'Type to search...');
+
+					// for max length counter					
+					$('div.form-group').maxlength();
+
+				});
+	</script>
+
+</div>

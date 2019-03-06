@@ -1,7 +1,8 @@
 package com.mum.groupproject.survey.controllers;
 
 import java.text.SimpleDateFormat;
-import java.util.Map;
+
+import java.util.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,25 +33,27 @@ public class ActionRequest {
 	@Autowired
 	private IQuestion questionService;
 
+	@Autowired
 	private IChoice choiceService;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String landing() {
-		return "welcome to survey system";
-	}
+	private List<String> list = new ArrayList<>();
 
 	@RequestMapping(value = "formSubmission/{option}", method = RequestMethod.POST)
-	public String create(@PathVariable("option") String option, Map<String, String> map) {
+	public String create(@RequestParam Map<String, String> map, @PathVariable("option") String option) {
 		String result = "";
-		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			if (option.equals("survey")) {
+				System.out.println(map.get("name"));
+				System.out.println(map.get("description"));
+				System.out.println(map.get("openDate"));
 				Survey survey = new Survey();
 				survey.setName(map.get("name"));
 				survey.setDescription(map.get("description"));
 				survey.setOpenDate(format.parse(map.get("openDate")));
 				survey.setEndDate(format.parse(map.get("endDate")));
 				result = surveyService.create(survey);
+				System.out.println(result);
 			} else if (option.equals("question")) {
 				Survey survey = surveyService.findOne(map.get("surveyId"));
 				QuestionType type = typeService.findOne(map.get("typeId"));
@@ -63,9 +66,11 @@ public class ActionRequest {
 				Choice choice = new Choice(question);
 				choice.setValue(map.get("value"));
 				choice.setDescription(map.get("description"));
-				result = choiceService.create(choice);
+				return choiceService.create(choice);
+			} else {
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			result = Messages.exception;
 		}
 		return result;
