@@ -39,9 +39,9 @@ public abstract class QuestionActivity implements Serializable{
     }
     
     
-    abstract String createActivity(final QuestionActivity activity);
-    
-    abstract String updateActivity(final QuestionActivity activity);
+//    abstract String createActivity(final QuestionActivity activity);
+//    
+//    abstract String updateActivity(final QuestionActivity activity);
     
    
 

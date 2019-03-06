@@ -69,17 +69,17 @@ public class Answer extends QuestionActivity{
 
 
 
-	@Override
-	String createActivity(QuestionActivity activity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	String updateActivity(QuestionActivity activity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	String createActivity(QuestionActivity activity) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	String updateActivity(QuestionActivity activity) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 	
 	
 	
