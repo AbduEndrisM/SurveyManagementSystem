@@ -18,13 +18,6 @@ public class SurveyDao extends GenericDao<Survey>{
 		return list;
 	}
 	
-	public Survey findOne(final String id) {
-		for(Survey survey:allSurveys()) {
-			if(survey.getId().equals(id)) {
-				return survey;
-			}
-		}
-		return null;
-	}
+	
 
 }

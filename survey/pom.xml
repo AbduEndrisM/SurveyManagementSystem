@@ -7,7 +7,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.5.9.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.mum.groupproject</groupId>
 	<artifactId>survey</artifactId>
@@ -17,8 +17,8 @@
 
 	<properties>
 		<java.version>1.8</java.version>
-		
-			<thymeleaf.version>3.0.3.RELEASE</thymeleaf.version>
+
+		<thymeleaf.version>3.0.3.RELEASE</thymeleaf.version>
 		<thymeleaf-layout-dialect.version>2.2.1</thymeleaf-layout-dialect.version>
 	</properties>
 
@@ -55,14 +55,32 @@
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		
+
 	</dependencies>
 
 	<build>
+		<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.8</version>
+				<configuration>
+					<imageName>${project.artifactId}</imageName>
+					<dockerDirectory>src/Docker</dockerDirectory>
+					<!-- <repository>myorg/${project.artifactId}</repository> -->
+					<resources>
+					   <resource>
+					     <targetPath>/</targetPath>
+					     <directory>${project.build.directory}</directory>
+					     <include>${project.build.finalName}.jar</include>
+					   </resource>
+					</resources>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

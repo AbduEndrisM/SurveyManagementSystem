@@ -53,56 +53,32 @@
 					<div class="row" style="margin-top: 5px;"></div>
 					<div class="panel panel-flat  border-top-primary" id="surveyList">
 						<div class="panel-heading pt-20 pl-20">
-							<span class="panel-title" style="font-size: 20px;"> <i
-								class="fa fa-tasks position-left"></i><span
-								class="text-semibold">All Surveys</span>
+							<span class="panel-title" style="font-size: 20px;">
+								<div class="alert alert-primary alert-styled-left"
+									style="width: 90%; margin: auto;">
+
+									<center>
+										<span class="text-semibold">Welcome!</span> We're glad to <a
+											href="bootstrap_alerts.htm#" class="alert-link">see you
+											taking this survey</a> <span th:text="${survey.name}"
+											style="text-style: bold;"></span>
+									</center>
+								</div>
 							</span>
-							<div class="pull-right">
-								<button class="btn btn-default"
-									onclick="showAndHide('#surveyList','#newSurvey')">
-									<span class="text-semibold">NEW</span><i class="fa fa-plus"></i>
-								</button>
-							</div>
+							<hr style="border:1px solid black;background-color:black;"/>
+
 						</div>
 
 						<div class="panel-body">
-							<div class="table-responsive" style="margin-top: 1%;">
-								<table class="table  table-striped table-hover">
-									<thead>
-										<tr class="text-semi-bold;" style="background-color:#394f72;color:#FFF;">
-											<th class="text-bold">Name</th>
-											<th class="text-bold">Description</th>
+							<div class="col-md-12" th:each="question : ${questions}">
 
-											<th class="text-bold">Period</th>
-											<th class="text-bold">Questionaire</th>
-											<th class="text-bold"><span class="pull-right">Edit</span></th>
+								<div class="form-group">
+									<label for="name" class="control-label" th:text="${question.name}"></label> <span
+										class="text-danger">*</span> <input type="text" name="fname"
+										class="form-control input-roundless" id=""
+										 required="required">
+								</div>
 
-
-										</tr>
-									</thead>
-									<tbody>
-										<tr th:each="survey :${surveys}">
-											<td style="width: 10%" class="text-semibold"><a th:href="${'survey'+'/'+survey.id+'/questions'}"><span
-												th:text="${survey.name}" class="plainText"></span></a></td>
-											<td class="text-semibold"><a th:href="${'survey'+'/'+survey.id+'/questions'}"><span th:text="${survey.description}" class="plainText"></span></a></td>
-											<td class="text-semibold"><a th:href="${'survey'+'/'+survey.id+'/questions'}"><span
-												th:text="${#dates.format(survey.getOpenDate(), 'MMM dd,yyyy')+' - '+#dates.format(survey.getEndDate(), 'MMM dd,yyyy')}" class="plainText"></span></a></td>
-											
-											
-											
-											
-											<td><span ><a th:href="${'/questions_'+survey.id}" style="width:50%;margin:auto;background-color:#394f72;color:white;" class=" btn btn-sm btn-primary"
-												><i
-													class="fa fa-question-circle"></i></a></span></td>
-											<td><span class="pull-right"> <a
-													 class="btn btn-default">
-														<i class="fa fa-edit"></i>
-												</a>
-											</span></td>
-										</tr>
-									</tbody>
-
-								</table>
 							</div>
 						</div>
 
@@ -146,7 +122,7 @@
 														class="form-control input-roundless"></textarea>
 												</div>
 											</div>
-										
+
 											<div class="col-md-6">
 												<div class="form-group">
 													<label for="eventDate" class="control-label text-semibold">
@@ -159,17 +135,17 @@
 											<div class="col-md-6">
 												<div class="form-group">
 													<label for="eventDate" class="control-label text-semibold">
-														Survey  End Date <span class="text-danger">*</span>
+														Survey End Date <span class="text-danger">*</span>
 													</label> <input type="date" name="endDate"
 														class="form-control input-roundless" id="endDate"
 														required="required" />
 												</div>
 											</div>
-											
+
 
 
 										</div>
-										
+
 									</div>
 								</div>
 								<div class="panel-footer">

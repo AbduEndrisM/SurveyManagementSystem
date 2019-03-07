@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 
 import java.util.*;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,14 +13,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mum.groupproject.survey.domain.Admin;
 import com.mum.groupproject.survey.domain.Choice;
 import com.mum.groupproject.survey.domain.Question;
 import com.mum.groupproject.survey.domain.QuestionType;
 import com.mum.groupproject.survey.domain.Survey;
+import com.mum.groupproject.survey.domain.SurveyTaker;
+import com.mum.groupproject.survey.domain.User;
 import com.mum.groupproject.survey.iservice.IChoice;
 import com.mum.groupproject.survey.iservice.IQuestion;
 import com.mum.groupproject.survey.iservice.IQuestionType;
 import com.mum.groupproject.survey.iservice.ISurvey;
+import com.mum.groupproject.survey.iservice.IuserService;
+import com.mum.groupproject.survey.utility.Md5;
 import com.mum.groupproject.survey.utility.Messages;
 
 @RestController
@@ -36,7 +43,8 @@ public class ActionRequest {
 	@Autowired
 	private IChoice choiceService;
 
-	private List<String> list = new ArrayList<>();
+	@Autowired
+	private IuserService userService;
 
 	@RequestMapping(value = "formSubmission/{option}", method = RequestMethod.POST)
 	public String create(@RequestParam Map<String, String> map, @PathVariable("option") String option) {
@@ -56,21 +64,82 @@ public class ActionRequest {
 				System.out.println(result);
 			} else if (option.equals("question")) {
 				Survey survey = surveyService.findOne(map.get("surveyId"));
+				System.out.println("typeId :" + map.get("typeId"));
+
 				QuestionType type = typeService.findOne(map.get("typeId"));
+				System.out.println("details :" + type.getName());
 				Question q = new Question(survey, type);
 				q.setName(map.get("name"));
 				q.setDescription(map.get("description"));
 				result = questionService.create(q);
 			} else if (option.equals("choice")) {
+				System.out.println("questionId :" + map.get("questionId"));
 				Question question = questionService.findOne(map.get("questionId"));
 				Choice choice = new Choice(question);
 				choice.setValue(map.get("value"));
 				choice.setDescription(map.get("description"));
 				return choiceService.create(choice);
 			} else {
+				return "UNKOWN REQUEST";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			result = Messages.exception;
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "login/{option}", method = RequestMethod.POST)
+	public String login(@RequestParam Map<String, String> map, @PathVariable("option") String option,
+			HttpSession session) {
+		String result = "";
+		try {
+			if (option.equals("surveyTaker")) {
+				SurveyTaker survey = userService.findTakerByuername(map.get("username"));
+				if (survey != null) {
+					if (survey.getPassword().equals(Md5.md5(map.get("password")))) {
+						session.setAttribute("taker", survey);
+						result = Messages.access;
+					} else {
+						result = Messages.unknown;
+					}
+				} else {
+					result = Messages.unknown;
+				}
+			} else if (option.equals("admin")) {
+				Admin admin = userService.findAdminByusername(map.get("username"));
+				if (admin != null) {
+					if (admin.getPassword().equals(map.get("password"))) {
+						session.setAttribute("admin", admin);
+						result = Messages.access;
+					} else {
+						result = Messages.unknown;
+					}
+				} else {
+					result = Messages.unknown;
+				}
+			}
+		} catch (Exception e) {
+			result = Messages.exception;
+		}
+		return result;
+	}
+
+	@RequestMapping(value = "register/{option}")
+	public String register(@RequestParam Map<String, String> map, @PathVariable("option") String option) {
+		String result = "";
+		try {
+			if (option.equals("taker")) {
+				User user = new SurveyTaker();
+				user.setUsername(map.get("username"));
+				user.setPassword(map.get("password"));
+				if (user.getPassword().equals(map.get("confirm"))) {
+					result = userService.createAccount(user);
+				} else {
+					result = Messages.mistmatch;
+				}
+			}
+		} catch (Exception e) {
 			result = Messages.exception;
 		}
 		return result;

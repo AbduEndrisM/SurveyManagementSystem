@@ -5,19 +5,17 @@
 		<div class="sidebar-user">
 			<div class="category-content">
 				<div class="media">
-					<a href="#" class="media-left"><img
-						src="assets/images/users/user6.png" class="img-circle img-sm"
-						alt=""></a>
+					
 					<div class="media-body">
 						<span class="media-heading text-semibold"
-							th:if="${session.committee != null}"
-							th:text="${session.committee.firstName+'  '+session.committee.lastName}"></span>
-						<div class="text-size-mini text-muted" th:if="${session.commitee != null}">
-							<span th:text="${session.committee.position}"></span>
+							th:if="${session.taker != null}"
+							th:text="${session.taker.username}"></span>
+						<div class="text-size-mini text-muted" th:if="${session.taker != null}">
+							<span >Software Engineer</span>
 						</div>
 
-						<div class=" text-muted" style="font-size: 8px;" th:if="${session.committee != null}">
-							<span th:utext="${session.committee.position}"></span>
+						<div class=" text-muted" style="font-size: 8px;" th:if="${session.taker != null}">
+							<span>Software Engineer</span>
 						</div>
 
 					</div>
@@ -48,11 +46,10 @@
 					<li class="hidden"><a href="dashboard"><i class="fa fa-user"></i> <span>Profile</span></a>
 					
 					
-					<li ><a href="dashboard"><i class="fa fa-suitcase"></i> <span>Surveys</span></a></li>
-					<li ><a href="dashboard"><i class="fa fa-question-circle"></i> <span>Question Types</span></a></li>
-					<li ><a href="newEvent"><i class="fa fa-plus"></i><span>Create Survey</span></a></li>			
+					<li ><a href="survey"><i class="fa fa-suitcase"></i> <span>Surveys</span></a></li>
+					<li ><a href="questionTypes"><i class="fa fa-question-circle"></i> <span>Question Types</span></a></li>			
 								
-					<li class="hidden"><a href="#"><i class="fa fa-user"></i> <span>My
+					<li ><a href="user/logout"><i class="fa fa-user"></i> <span>My
 								Profile</span></a></li>
 								<li><a href="logout"><i class="fa fa-sign-out"></i> <span>Logout</span></a>
 

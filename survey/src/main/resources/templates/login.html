@@ -3,25 +3,25 @@
 
 <!-- Mirrored from followtechnique.com/themes/bird_v1/theme/page_starter.htm by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 13 Jul 2016 20:28:57 GMT -->
 <head>
-<meta charset="utf-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title> Survey MIS</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SURVEY MIS</title>
 
-<link href="fonts/fonts.css" rel="stylesheet" type="text/css"/>
+<link href="fonts/fonts.css" rel="stylesheet" type="text/css" />
 <link href="assets/font-awesome/css/font-awesome.min.css"
-	rel="stylesheet" type="text/css"/>
-<link href="css/animate.min.css" rel="stylesheet" type="text/css"/>
-<link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
-<link href="css/main.css" rel="stylesheet" type="text/css"/>
-<link href="css/bootstrap-extended.css" rel="stylesheet" type="text/css"/>
-<link href="css/plugins.css" rel="stylesheet" type="text/css"/>
-<link href="css/color-system.css" rel="stylesheet" type="text/css"/>
-<link href="css/media.css" rel="stylesheet" type="text/css"/>
+	rel="stylesheet" type="text/css" />
+<link href="css/animate.min.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="css/main.css" rel="stylesheet" type="text/css" />
+<link href="css/bootstrap-extended.css" rel="stylesheet" type="text/css" />
+<link href="css/plugins.css" rel="stylesheet" type="text/css" />
+<link href="css/color-system.css" rel="stylesheet" type="text/css" />
+<link href="css/media.css" rel="stylesheet" type="text/css" />
 <link type="text/css" rel="stylesheet" href="login_simple.htm"
-	id="style"/>
+	id="style" />
 <link type="text/css" rel="stylesheet" href="login_simple.htm"
-	id="theme"/>
+	id="theme" />
 
 <div data-th-replace="back-End/Link/CSS :: myCss"></div>
 
@@ -46,58 +46,140 @@
 					<div class="content-wrapper">
 
 						<!-- Content area -->
-						<div class="content">
+						<div id="login_wrapper">
+							<div class="content">
 
-							<form method="POST" id="login_form">
-								<div class="panel panel-body login-form">
-									<div class="text-center mb-20">
-										<div class="icon-object border-slate-300 text-slate-300">
-											<i class="fa fa-user"></i>
+								<form method="POST" id="login_form">
+									<div class="panel panel-body login-form">
+										<div class="text-center mb-20">
+											<div class="icon-object border-slate-300 text-slate-300">
+												<i class="fa fa-user"></i>
+											</div>
+											<h5 class="content-group">
+												Login to your account <small class="display-block">Please
+													put your credentials</small>
+											</h5>
 										</div>
-										<h5 class="content-group">
-											Login to your account <small class="display-block">Please
-												put your credentials</small>
-										</h5>
-									</div>
 
-									<div class="form-group has-feedback has-feedback-left" >
-										<input type="text" class="form-control" placeholder="Username"
-											name="username" required="required"/>
-										<div class="form-control-feedback">
-											<i class="fa fa-user text-muted"></i>
+										<div class="form-group has-feedback has-feedback-left">
+											<input type="text" class="form-control"
+												placeholder="Username" name="username" required="required" />
+											<div class="form-control-feedback">
+												<i class="fa fa-user text-muted"></i>
+											</div>
 										</div>
-									</div>
 
-									<div class="form-group has-feedback has-feedback-left" >
-										<input type="password" class="form-control"
-											placeholder="Password" name="password" required="required"/>
-										<div class="form-control-feedback">
-											<i class="fa fa-lock text-muted"></i>
+										<div class="form-group has-feedback has-feedback-left">
+											<input type="password" class="form-control"
+												placeholder="Password" name="password" required="required" />
+											<div class="form-control-feedback">
+												<i class="fa fa-lock text-muted"></i>
+											</div>
 										</div>
-									</div>
 
 
 
-									<div class="form-group" style="margin-top: 10%;">
-										<button type="submit"
-											class="btn btn-primary btn-lg btn-labeled btn-labeled-right btn-block">
-											<b><i class="fa fa-sign-in"></i></b> Sign in
-										</button>
-									</div>
 
-									<div class="login-options">
-										<div class="row">
+										<div class="form-group"
+											style="margin-left: 1%; margin-top: 5%;">
+											<button type="submit"
+												class="btn btn-primary btn-lg btn-labeled btn-labeled-right btn-block">
+												<b><i class="fa fa-sign-in"></i></b> Sign in
+											</button>
+										</div>
 
 
-											<div class="col-sm-12 text-right mt-10">
-												<a href="#" data-toggle="modal"
-													data-target="#forgetPassword">Forgot password?</a>
+
+										<div class="login-options">
+											<div class="row">
+												<div class="col-sm-6 text-left mt-10">
+													<a href="#" onclick="showAndHide('#login_wrapper','#registration_wrapper')"
+														style="color: #90A4AE !important; font-size: 140%; margin-left: 2%; text-decoration: underline">Create
+														User Account</a>
+												</div>
+
+												<div class="col-sm-6 text-right mt-10">
+													<a href="#" data-toggle="modal"
+														data-target="#forgetPassword"
+														style="color: #90A4AE !important; font-size: 140%;">Forgot
+														password?</a>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
 
-							</form>
+								</form>
+							</div>
+						</div>
+						<div id="registration_wrapper" class="hidden">
+							<div class="content">
+
+								<form method="POST" id="register_form">
+									<div class="panel panel-body login-form">
+										<div class="text-center mb-20">
+											<div class="icon-object border-slate-300 text-slate-300">
+												<i class="fa fa-user"></i>
+											</div>
+											<h5 class="content-group">
+												Create Account <small class="display-block">Please
+													provide required information</small>
+											</h5>
+										</div>
+
+										<div class="form-group has-feedback has-feedback-left">
+											<input type="text" class="form-control"
+												placeholder="Username" name="username" required="required" />
+											<div class="form-control-feedback">
+												<i class="fa fa-user text-muted"></i>
+											</div>
+										</div>
+
+										<br />
+										<div class="form-group has-feedback has-feedback-left">
+											<input type="password" class="form-control"
+												placeholder="Password" name="password" required="required" />
+											<div class="form-control-feedback">
+												<i class="fa fa-lock text-muted"></i>
+											</div>
+										</div>
+										<br />
+										<div class="form-group has-feedback has-feedback-left">
+											<input type="password" class="form-control"
+												placeholder="Retype Password" name="confirm"
+												required="required" />
+											<div class="form-control-feedback">
+												<i class="fa fa-lock text-muted"></i>
+											</div>
+										</div>
+
+
+
+
+										<div class="form-group"
+											style="margin-left: 1%; margin-top: 5%;">
+											<button  type="submit"
+												class="btn btn-primary btn-lg btn-labeled btn-labeled-right btn-block">
+												<b><i class="fa fa-user-plus"></i></b> Create Account
+											</button>
+										</div>
+
+
+
+										<div class="login-options">
+											<div class="row">
+												<div class="col-sm-12 text-right mt-10">
+													<a href="#" onclick="showAndHide('#registration_wrapper','#login_wrapper')"
+														style="color: #90A4AE !important; font-size: 140%; margin-left: 2%; text-decoration: underline;">Login
+														Page</a>
+												</div>
+
+
+											</div>
+										</div>
+									</div>
+
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -109,7 +191,9 @@
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal">&times;</button>
-								<h4 class="modal-title"><b>PLEASE PROVIDE YOUR EMAIL ADDRESS</b></h4>
+								<h4 class="modal-title">
+									<b>PLEASE PROVIDE YOUR EMAIL ADDRESS</b>
+								</h4>
 							</div>
 
 							<div class="modal-body">

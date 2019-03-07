@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Choice implements Serializable{
@@ -20,6 +21,7 @@ public class Choice implements Serializable{
 	
 	private String description;
 	
+	@ManyToOne
 	private Question question;
 	
 	
@@ -80,6 +82,8 @@ public class Choice implements Serializable{
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
+	
+	public Choice() {}
 	
 	
 	
