@@ -149,7 +149,7 @@ function createSurvey() {
 	var formData = {};
 	formData = $('#new_survey').serialize();
 	$.ajax({
-		url : 'formSubmission/survey',
+		url : 'http://localhost:9000/formSubmission/survey',
 		method : 'POST',
 		data : formData,
 		success : function(data) {
@@ -178,7 +178,7 @@ function createSurvey() {
 function createQuestion() {
 	var formData = {};
 	formData = $('#new_question').serialize();
-	var url1 = 'formSubmission/question'
+	var url1 = 'http://localhost:9000/formSubmission/question'
 	$.ajax({
 		url : url1,
 		method : 'POST',
@@ -210,7 +210,7 @@ function createChoice() {
 	var formData = {};
 	formData = $('#choiceForm').serialize();
 	$.ajax({
-		url : 'formSubmission/choice',
+		url : 'http://localhost:9000/formSubmission/choice',
 		method : 'POST',
 		data : formData,
 		success : function(data) {
