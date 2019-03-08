@@ -1,0 +1,4 @@
+FROM openjdk:8
+ADD survey.jar survey.jar
+RUN bash -c 'touch /survey.jar'
+ENTRYPOINT["java", "-jar", "survey.jar"]
