@@ -138,6 +138,11 @@ function editEvent() {
 		event.preventDefault();
 		createUserAccount();
 	});
+
+	$('#submit_answers').submit('click', function(event) {
+		event.preventDefault();
+		submitAnswers();
+	});
 })();
 
 function createSurvey() {
@@ -243,7 +248,21 @@ function createUserAccount() {
 	})
 }
 
-
+function submitAnswers() {
+	var submitedData = $('#submit_answers').serialize();
+	$.ajax({
+		url : 'formSubmission/submitAnswers',
+		method : 'POST',
+		data : submitedData,
+		success : function(data) {
+			if (data == 'Survey is successfully submited,thanks for your participation') {
+				successMessage(data);
+			} else {
+				failureMessage(data);
+			}
+		}
+	})
+}
 
 function successMessage(data) {
 	new PNotify({
@@ -257,7 +276,7 @@ function successMessage(data) {
 	}, 1000)
 }
 
-function failureMessage(data){
+function failureMessage(data) {
 	new PNotify({
 		title : 'Failure',
 		text : data,

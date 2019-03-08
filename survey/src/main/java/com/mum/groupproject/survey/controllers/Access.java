@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
 import com.mum.groupproject.survey.domain.Choice;
 import com.mum.groupproject.survey.domain.Question;
 import com.mum.groupproject.survey.domain.QuestionType;
@@ -18,6 +17,8 @@ import com.mum.groupproject.survey.iservice.IQuestionType;
 import com.mum.groupproject.survey.iservice.ISurvey;
 
 import java.util.*;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class Access {
@@ -35,8 +36,11 @@ public class Access {
 	private IChoice choiceService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String landing(ModelMap model) {
-
+	public String landing(ModelMap model, HttpSession session) {
+		session.removeAttribute("admin");
+		session.removeAttribute("taker");
+		session.removeAttribute("access");
+		session.invalidate();
 		return "login";
 	}
 
@@ -47,7 +51,7 @@ public class Access {
 		if (option.equals("survey")) {
 			List<Survey> list = surveyService.allSurveys();
 			model.addAttribute("surveys", list);
-			return "back-End/Admin/home";
+			return "back-End/client/home";
 		} else if (option.contains("questions")) {
 			Survey survey = surveyService.findOne(sourceId);
 			List<Question> questions = questionService.surveyQuestion(survey);
@@ -72,8 +76,16 @@ public class Access {
 		} else if (option.contains("surveyDetails")) {
 			Survey survey = surveyService.findOne(sourceId);
 			List<Question> list = questionService.surveyQuestion(survey);
+			Map<Question, List<Choice>> map = new HashMap<>();
 			model.addAttribute("survey", survey);
-			model.addAttribute("questions", list);
+			for (Question q : list) {
+				if (q.getQuestionType().getName().equals("MCE")) {
+					map.put(q, choiceService.questionChoices(q));
+				} else {
+					map.put(q, null);
+				}
+			}
+			model.addAttribute("questions", map);
 			return "back-End/client/surveyQuestions";
 		} else {
 			return "redirect:/";

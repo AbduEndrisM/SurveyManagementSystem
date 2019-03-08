@@ -23,7 +23,7 @@
 	<div data-th-replace="back-End/Layout/header :: myHeader"></div>
 	<div class="page-container" style="min-height: 700px">
 		<div class="page-content">
-			<div data-th-replace="back-End/Layout/sidebar :: mySidebar"></div>
+			<div data-th-replace="back-End/Admin/sidebar :: adminSidebar"></div>
 			<!--  <div data-th-replace="back-End/Layout/content :: myContent">-->
 			<div class="content-wrapper" data-th-fragment="myContent">
 
@@ -82,16 +82,16 @@
 									</thead>
 									<tbody>
 										<tr th:each="survey :${surveys}">
-											<td style="width: 10%" class="text-semibold"><a th:href="${'survey'+'/'+survey.id+'/questions'}"><span
+											<td style="width: 10%" class="text-semibold"><a th:href="${'/survey'+'/'+survey.id+'/questions'}"><span
 												th:text="${survey.name}" class="plainText"></span></a></td>
-											<td class="text-semibold"><a th:href="${'survey'+'/'+survey.id+'/questions'}"><span th:text="${survey.description}" class="plainText"></span></a></td>
-											<td class="text-semibold"><a th:href="${'survey'+'/'+survey.id+'/questions'}"><span
+											<td class="text-semibold"><a th:href="${'admin/survey'+'/'+survey.id+'/questions'}"><span th:text="${survey.description}" class="plainText"></span></a></td>
+											<td class="text-semibold"><a th:href="${'admin/survey'+'/'+survey.id+'/questions'}"><span
 												th:text="${#dates.format(survey.getOpenDate(), 'MMM dd,yyyy')+' - '+#dates.format(survey.getEndDate(), 'MMM dd,yyyy')}" class="plainText"></span></a></td>
 											
 											
 											
 											
-											<td><span ><a th:href="${'/questions_'+survey.id}" style="width:50%;margin:auto;background-color:#394f72;color:white;" class=" btn btn-sm btn-primary"
+											<td><span ><a th:href="${'questions_'+survey.id}" style="width:50%;margin:auto;background-color:#394f72;color:white;" class=" btn btn-sm btn-primary"
 												><i
 													class="fa fa-question-circle"></i></a></span></td>
 											<td><span class="pull-right"> <a

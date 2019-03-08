@@ -49,15 +49,14 @@
 						<div id="login_wrapper">
 							<div class="content">
 
-								<form method="POST" id="login_form">
+								<form method="POST" id="admin_login_form">
 									<div class="panel panel-body login-form">
 										<div class="text-center mb-20">
 											<div class="icon-object border-slate-300 text-slate-300">
 												<i class="fa fa-user"></i>
 											</div>
 											<h5 class="content-group">
-												Login to your account <small class="display-block">Please
-													put your credentials</small>
+												ADMIN LOGIN PAGE</small>
 											</h5>
 										</div>
 
@@ -92,16 +91,13 @@
 
 										<div class="login-options">
 											<div class="row">
-												<div class="col-sm-6 text-left mt-10 text-semibold">
-													<a href="#" onclick="showAndHide('#login_wrapper','#registration_wrapper')"
-														style="color: #90A4AE !important; font-size: 140%; margin-left: 2%; text-decoration: underline">Create
+												<div class="col-sm-6 text-left mt-10">
+													<a href="/" onclick="showAndHide('#login_wrapper','#registration_wrapper')"
+														style="color: #90A4AE !important; font-size: 140%; margin-left: 2%; text-decoration: underline">Back To
 														User Account</a>
 												</div>
 
-												<div class="col-sm-6 text-right mt-10 text-semibold">
-													<a href="admin/login" 
-														style="color: #90A4AE !important; font-size: 140%;text-decoration: underline;">Admin Login</a>
-												</div>
+												
 											</div>
 										</div>
 									</div>
@@ -109,76 +105,7 @@
 								</form>
 							</div>
 						</div>
-						<div id="registration_wrapper" class="hidden">
-							<div class="content">
-
-								<form method="POST" id="register_form">
-									<div class="panel panel-body login-form">
-										<div class="text-center mb-20">
-											<div class="icon-object border-slate-300 text-slate-300">
-												<i class="fa fa-user"></i>
-											</div>
-											<h5 class="content-group">
-												Create Account <small class="display-block">Please
-													provide required information</small>
-											</h5>
-										</div>
-
-										<div class="form-group has-feedback has-feedback-left">
-											<input type="text" class="form-control"
-												placeholder="Username" name="username" required="required" />
-											<div class="form-control-feedback">
-												<i class="fa fa-user text-muted"></i>
-											</div>
-										</div>
-
-										<br />
-										<div class="form-group has-feedback has-feedback-left">
-											<input type="password" class="form-control"
-												placeholder="Password" name="password" required="required" />
-											<div class="form-control-feedback">
-												<i class="fa fa-lock text-muted"></i>
-											</div>
-										</div>
-										<br />
-										<div class="form-group has-feedback has-feedback-left">
-											<input type="password" class="form-control"
-												placeholder="Retype Password" name="confirm"
-												required="required" />
-											<div class="form-control-feedback">
-												<i class="fa fa-lock text-muted"></i>
-											</div>
-										</div>
-
-
-
-
-										<div class="form-group"
-											style="margin-left: 1%; margin-top: 5%;">
-											<button  type="submit"
-												class="btn btn-primary btn-lg btn-labeled btn-labeled-right btn-block">
-												<b><i class="fa fa-user-plus"></i></b> Create Account
-											</button>
-										</div>
-
-
-
-										<div class="login-options">
-											<div class="row">
-												<div class="col-sm-12 text-right mt-10">
-													<a href="#" onclick="showAndHide('#registration_wrapper','#login_wrapper')"
-														style="color: #90A4AE !important; font-size: 140%; margin-left: 2%; text-decoration: underline;">Login
-														Page</a>
-												</div>
-
-
-											</div>
-										</div>
-									</div>
-
-								</form>
-							</div>
-						</div>
+						
 					</div>
 				</div>
 			</div>

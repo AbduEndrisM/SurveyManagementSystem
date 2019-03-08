@@ -43,6 +43,7 @@ public class UserController {
 				return "back-End/client/questions";
 			} else if (option.equals("logout")) {
 				session.removeAttribute("taker");
+				session.removeAttribute("admin");
 				session.invalidate();
 				result = "redirect:/";
 			}

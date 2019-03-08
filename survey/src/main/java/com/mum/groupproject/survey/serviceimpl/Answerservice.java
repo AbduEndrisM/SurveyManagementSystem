@@ -26,6 +26,7 @@ public class Answerservice implements IAnswer{
 			answerDao.create(answer);
 			return Messages.save;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return Messages.exception;
 		}
 	}

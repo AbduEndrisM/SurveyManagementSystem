@@ -28,7 +28,7 @@
 	<div data-th-replace="back-End/Layout/header :: myHeader"></div>
 	<div class="page-container" style="min-height: 700px">
 		<div class="page-content">
-			<div data-th-replace="back-End/Layout/sidebar :: mySidebar"></div>
+			<div data-th-replace="back-End/Admin/sidebar :: adminSidebar"></div>
 			<!--  <div data-th-replace="back-End/Layout/content :: myContent">-->
 			<div class="content-wrapper" data-th-fragment="myContent">
 
@@ -38,7 +38,7 @@
 
 						<ul class="breadcrumb">
 							<li><a href="#"><i class="fa fa-home"></i>Home</a></li>
-							<li><a href="/">Surveys</a></li>
+							<li><a href="survey">Surveys</a></li>
 							<li class="active">Survey's questions</li>
 						</ul>
 
@@ -99,7 +99,7 @@
 
 
 											
-											<td><span class="pull-right"> <div class="form-group"><a  style="width:50%;" th:href="${'/choices_'+question.id}" 
+											<td><span class="pull-right"> <div class="form-group"><a  style="width:50%;" th:href="${'choices_'+question.id}" 
 													class=" btn btn-sm btn-info pull-right" th:if="${question.questionType.name} == MCE OR ${question.questionType.name} == dropdown "><i
 														class="fa fa-check-square-o"></i></a><button class="btn btn-default pull-right" style="margin-left:5px;margin-top:2px;">
 														<i class="fa fa-edit"></i>

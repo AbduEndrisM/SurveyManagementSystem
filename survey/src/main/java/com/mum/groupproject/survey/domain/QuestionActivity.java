@@ -3,6 +3,7 @@ package com.mum.groupproject.survey.domain;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
@@ -16,9 +17,10 @@ public abstract class QuestionActivity implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 
+	@ManyToOne
 	private Question question;
 	
-	
+	@ManyToOne
     private Survey survey;
     
     private Timestamp recordedDate;

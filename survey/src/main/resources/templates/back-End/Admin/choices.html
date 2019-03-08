@@ -28,7 +28,7 @@
 	<div data-th-replace="back-End/Layout/header :: myHeader"></div>
 	<div class="page-container" style="min-height: 700px">
 		<div class="page-content">
-			<div data-th-replace="back-End/Layout/sidebar :: mySidebar"></div>
+			<div data-th-replace="back-End/Admin/sidebar :: adminSidebar"></div>
 			<!--  <div data-th-replace="back-End/Layout/content :: myContent">-->
 			<div class="content-wrapper" data-th-fragment="myContent">
 
@@ -38,7 +38,7 @@
 
 						<ul class="breadcrumb">
 							<li><a href="#"><i class="fa fa-home"></i>Home</a></li>
-							<li><a href="/">Surveys</a></li>
+							<li><a href="survey">Surveys</a></li>
 							<li><a th:href="${'questions_'+question.survey.id}">Questions</a></li>
 							<li class="active">Question choices</li>
 						</ul>

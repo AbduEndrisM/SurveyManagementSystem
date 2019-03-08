@@ -1,15 +1,31 @@
 
-
-function surveyTakerLogin(){
+function surveyTakerLogin() {
 	var formData = $('#login_form').serialize();
 	$.ajax({
 		url : 'login/surveyTaker',
 		method : 'POST',
 		data : formData,
-		success : function(data){
-			if(data == 'Account is found'){
-				location.href="home";
-			}else{
+		success : function(data) {
+			if (data == 'Account is found') {
+				location.href = "home";
+			} else {
+				failureMessage(data);
+			}
+		}
+	})
+}
+
+function adminLogin() {
+	var formData = $('#admin_login_form').serialize();
+	alert(formData);
+	$.ajax({
+		url : 'http://localhost:9000/login/admin',
+		method : 'POST',
+		data : formData,
+		success : function(data) {
+			if (data == 'Account is found') {
+				location.href = "survey";
+			} else {
 				failureMessage(data);
 			}
 		}
@@ -20,6 +36,11 @@ function surveyTakerLogin(){
 	$('#login_form').submit('click', function() {
 		event.preventDefault();
 		surveyTakerLogin();
+	});
+
+	$('#admin_login_form').submit('click', function() {
+		event.preventDefault();
+		adminLogin();
 	});
 
 })();

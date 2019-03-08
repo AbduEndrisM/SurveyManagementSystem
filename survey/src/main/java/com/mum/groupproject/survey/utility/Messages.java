@@ -17,5 +17,8 @@ public class Messages {
 	
 	
 	public static final String mistmatch = "Please use the same password in confirm password sir!";
+	
+	
+	public static final String submitAnswer = "Survey is successfully submited,thanks for your participation";
 
 }

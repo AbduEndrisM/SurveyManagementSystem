@@ -14,14 +14,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mum.groupproject.survey.domain.Admin;
+import com.mum.groupproject.survey.domain.Answer;
 import com.mum.groupproject.survey.domain.Choice;
 import com.mum.groupproject.survey.domain.Question;
+import com.mum.groupproject.survey.domain.QuestionActivity;
 import com.mum.groupproject.survey.domain.QuestionType;
+import com.mum.groupproject.survey.domain.Rate;
 import com.mum.groupproject.survey.domain.Survey;
 import com.mum.groupproject.survey.domain.SurveyTaker;
 import com.mum.groupproject.survey.domain.User;
 import com.mum.groupproject.survey.iservice.IChoice;
 import com.mum.groupproject.survey.iservice.IQuestion;
+import com.mum.groupproject.survey.iservice.IQuestionActivityService;
 import com.mum.groupproject.survey.iservice.IQuestionType;
 import com.mum.groupproject.survey.iservice.ISurvey;
 import com.mum.groupproject.survey.iservice.IuserService;
@@ -45,6 +49,9 @@ public class ActionRequest {
 
 	@Autowired
 	private IuserService userService;
+
+	@Autowired
+	private IQuestionActivityService questionActivityService;
 
 	@RequestMapping(value = "formSubmission/{option}", method = RequestMethod.POST)
 	public String create(@RequestParam Map<String, String> map, @PathVariable("option") String option) {
@@ -79,6 +86,19 @@ public class ActionRequest {
 				choice.setValue(map.get("value"));
 				choice.setDescription(map.get("description"));
 				return choiceService.create(choice);
+			} else if (option.equals("submitAnswers")) {
+				List<QuestionActivity> activities = new ArrayList<>();
+				Survey survey = surveyService.findOne(map.get("surveyId"));
+				List<Question> surveyQuestions = questionService.surveyQuestion(survey);
+				for (Question question : surveyQuestions) {
+					QuestionActivity answer = new Answer(question, survey, map.get("answer_" + question.getId()));
+					QuestionActivity rate = new Rate(question, survey,
+							Integer.parseInt(map.get("rate_" + question.getId())));
+					activities.add(answer);
+					activities.add(rate);
+
+				}
+				return questionActivityService.createQuestionActivity(activities);
 			} else {
 				return "UNKOWN REQUEST";
 			}
@@ -99,6 +119,7 @@ public class ActionRequest {
 				if (survey != null) {
 					if (survey.getPassword().equals(Md5.md5(map.get("password")))) {
 						session.setAttribute("taker", survey);
+						session.setAttribute("access", "taker");
 						result = Messages.access;
 					} else {
 						result = Messages.unknown;
@@ -109,8 +130,9 @@ public class ActionRequest {
 			} else if (option.equals("admin")) {
 				Admin admin = userService.findAdminByusername(map.get("username"));
 				if (admin != null) {
-					if (admin.getPassword().equals(map.get("password"))) {
+					if (admin.getPassword().equals(Md5.md5(map.get("password")))) {
 						session.setAttribute("admin", admin);
+						session.setAttribute("access", "admin");
 						result = Messages.access;
 					} else {
 						result = Messages.unknown;
