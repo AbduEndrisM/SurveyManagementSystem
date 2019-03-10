@@ -15,5 +15,7 @@ public interface IQuestionType {
 	List<QuestionType> allTypes();
 	
 	QuestionType findOne(final String id);
+	
+	QuestionType findByName(final String name);
 
 }

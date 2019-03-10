@@ -81,7 +81,9 @@ public class Answer extends QuestionActivity{
 		return null;
 	}
 	
-	
+	public Answer() {
+		super(null, null);
+	}
 	
 
 }

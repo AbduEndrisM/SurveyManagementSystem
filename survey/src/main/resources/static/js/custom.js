@@ -143,6 +143,17 @@ function editEvent() {
 		event.preventDefault();
 		submitAnswers();
 	});
+	$("#mce").change(function() {
+
+		var selectedValue = $("#mce option:selected").attr('value');
+		drawDonut(selectedValue);
+	});
+	
+	$("#oe").change(function() {
+
+		var selectedValue = $("#oe option:selected").attr('value');
+		publishData(selectedValue);
+	});
 })();
 
 function createSurvey() {
@@ -173,6 +184,28 @@ function createSurvey() {
 			}
 		}
 	})
+}
+
+function publishData(choosenValue) {
+	var element = '';
+	$.ajax({
+		url : 'http://localhost:9000/formSubmission/openQuestions_'
+				+ choosenValue,
+		method : 'POST',
+		data : choosenValue,
+		async : false,
+		success : function(data) {
+			var result = $.parseJSON(data);
+			for (var i = 0; i < result.length; i++) {
+				element += '<div style="padding:20px;border:1px solid #ddd;border-radius:5px;width:80%;margin-left:1%;">';
+				element += result[i].value;
+				element += '</div>';
+				element+='<div style="height : 5px;"></div>';
+			}
+		}
+	})
+	$('#openEnd').empty();
+	$('#openEnd').append(element);
 }
 
 function createQuestion() {
@@ -250,18 +283,19 @@ function createUserAccount() {
 
 function submitAnswers() {
 	var submitedData = $('#submit_answers').serialize();
-	$.ajax({
-		url : 'formSubmission/submitAnswers',
-		method : 'POST',
-		data : submitedData,
-		success : function(data) {
-			if (data == 'Survey is successfully submited,thanks for your participation') {
-				successMessage(data);
-			} else {
-				failureMessage(data);
-			}
-		}
-	})
+	$
+			.ajax({
+				url : 'formSubmission/submitAnswers',
+				method : 'POST',
+				data : submitedData,
+				success : function(data) {
+					if (data == 'Survey is successfully submited,thanks for your participation') {
+						successMessage(data);
+					} else {
+						failureMessage(data);
+					}
+				}
+			})
 }
 
 function successMessage(data) {

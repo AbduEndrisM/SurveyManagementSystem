@@ -24,6 +24,8 @@ public class Choice implements Serializable{
 	@ManyToOne
 	private Question question;
 	
+	private boolean choosen;
+	
 	
 	private Timestamp recordedDate;
 	
@@ -83,6 +85,16 @@ public class Choice implements Serializable{
 		this.deleted = deleted;
 	}
 	
+	
+	
+	public boolean isChoosen() {
+		return choosen;
+	}
+
+	public void setChoosen(boolean choosen) {
+		this.choosen = choosen;
+	}
+
 	public Choice() {}
 	
 	

@@ -60,4 +60,14 @@ public class QuestionTypeService implements IQuestionType{
 		return typeDao.findOne(id);
 	}
 
+	@Override
+	public QuestionType findByName(String name) {
+		for(QuestionType type:allTypes()) {
+			if(type.getName().equalsIgnoreCase(name)) {
+				return type;
+			}
+		}
+		return null;
+	}
+
 }

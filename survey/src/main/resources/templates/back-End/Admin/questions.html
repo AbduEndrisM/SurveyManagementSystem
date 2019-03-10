@@ -64,6 +64,12 @@
 								class="text-semibold">All Questions</span>
 							</span>
 							<div class="pull-right">
+								<button class="btn btn-info"
+									data-toggle="modal"
+										data-target="#forgetPassword">
+									<span class="text-semibold">Upload</span><i
+										class="fa fa-upload"></i>
+								</button>
 								<button class="btn btn-default"
 									onclick="showAndHide('#questionList','#newQuestion')">
 									<span class="text-semibold">NEW</span><i class="fa fa-plus"></i>
@@ -88,7 +94,7 @@
 									</thead>
 									<tbody>
 										<tr th:each="question :${questions}">
-											<td  class="text-semibold"><a href="#"><span
+											<td class="text-semibold"><a href="#"><span
 													th:text="${question.name}" class="plainText"></span></a></td>
 											<td class="text-semibold"><a><span
 													th:text="${question.description}" class="plainText"></span></a></td>
@@ -98,12 +104,18 @@
 
 
 
-											
-											<td><span class="pull-right"> <div class="form-group"><a  style="width:50%;" th:href="${'choices_'+question.id}" 
-													class=" btn btn-sm btn-info pull-right" th:if="${question.questionType.name} == MCE OR ${question.questionType.name} == dropdown "><i
-														class="fa fa-check-square-o"></i></a><button class="btn btn-default pull-right" style="margin-left:5px;margin-top:2px;">
-														<i class="fa fa-edit"></i>
-													</button></div>
+
+											<td><span class="pull-right">
+													<div class="form-group">
+														<a style="width: 50%;" th:href="${'choices_'+question.id}"
+															class=" btn btn-sm btn-info pull-right"
+															th:if="${question.questionType.name} == MCE OR ${question.questionType.name} == dropdown "><i
+															class="fa fa-check-square-o"></i></a>
+														<button class="btn btn-default pull-right"
+															style="margin-left: 5px; margin-top: 2px;">
+															<i class="fa fa-edit"></i>
+														</button>
+													</div>
 											</span></td>
 										</tr>
 									</tbody>
@@ -117,6 +129,52 @@
 
 
 
+					</div>
+					<div id="forgetPassword" class="modal fade">
+						<div class="modal-dialog modal-sm">
+							<form th:action="@{/data/uploadExcel}" method="post"
+									enctype="multipart/form-data">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal">&times;</button>
+											<h4 class="modal-title">UPLOAD CSV FILE</h4>
+										</div>
+
+										<div class="modal-body">
+											<div class="col-md-12">
+												<div class="form-group">
+													<label for="excelSheet" class="control-label text-semibold">
+														Choose Csv File <span class="text-danger">*</span>
+
+													</label> <input type="file" class="file-input" name="attachment"
+														required="required" />
+												</div>
+											</div>
+
+										</div>
+
+										<div class="col-md-12">
+											<div class="form-group">
+
+												</label> <input type="hidden" name="eventId"
+													class="form-control input-roundless" id="eventId" required
+													th:value="${surveyId}">
+											</div>
+										</div>
+
+
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default"
+												data-dismiss="modal">
+												<i class="fa fa-ban"></i>Cancel
+											</button>
+											<button type="submit" class="btn btn-primary">
+												<i class="fa fa-save"></i>Save
+											</button>
+										</div>
+									</div>
+								</form>
+						</div>
 					</div>
 					<div id="newQuestion" class="hidden">
 
@@ -148,26 +206,27 @@
 														class="control-label text-semibold"> Question
 														Description <span class="required">*</span>
 													</label>
-													<textarea rows="6" id="questionDescription" name="description"
-														class="form-control input-roundless"></textarea>
+													<textarea rows="6" id="questionDescription"
+														name="description" class="form-control input-roundless"></textarea>
 												</div>
 											</div>
 
 											<div class="col-md-12">
 												<div class="form-group">
-													<label for="questionType" class="control-label text-semibold">
-														Choose Question Type <span class="text-danger">*</span>
+													<label for="questionType"
+														class="control-label text-semibold"> Choose
+														Question Type <span class="text-danger">*</span>
 													</label> <select class="form-control" name="typeId" id="typeId"
 														required="required">
 														<option></option>
-														<option th:each="type: ${types}" th:utext="${type.name}" th:value="${type.uuid}">
-														</option>
+														<option th:each="type: ${types}" th:utext="${type.name}"
+															th:value="${type.uuid}"></option>
 
 													</select>
 												</div>
 											</div>
-											<input type="hidden" th:value="${surveyId}" name="surveyId"/>
-											
+											<input type="hidden" th:value="${surveyId}" name="surveyId" />
+
 
 										</div>
 									</div>
@@ -185,6 +244,8 @@
 							</form>
 						</div>
 					</div>
+
+					
 
 
 					<div class="row">

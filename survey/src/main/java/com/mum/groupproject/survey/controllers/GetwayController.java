@@ -1,11 +1,16 @@
 package com.mum.groupproject.survey.controllers;
 
-
-
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -14,8 +19,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mum.groupproject.survey.domain.Answer;
 import com.mum.groupproject.survey.domain.Choice;
 import com.mum.groupproject.survey.domain.Question;
 import com.mum.groupproject.survey.domain.QuestionType;
@@ -24,12 +33,14 @@ import com.mum.groupproject.survey.iservice.IChoice;
 import com.mum.groupproject.survey.iservice.IQuestion;
 import com.mum.groupproject.survey.iservice.IQuestionType;
 import com.mum.groupproject.survey.iservice.ISurvey;
+import com.mum.groupproject.survey.utility.Messages;
 import com.mum.groupproject.survey.utility.Test;
+import com.mum.groupproject.survey.utility.ToResuse;
 
 @Controller
 @RequestMapping("admin")
 public class GetwayController {
-	
+
 	@Autowired
 	private ISurvey surveyService;
 
@@ -41,7 +52,7 @@ public class GetwayController {
 
 	@Autowired
 	private IChoice choiceService;
-	
+
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String adminAccess() {
 		return "back-End/Admin/AdminLogin";
@@ -90,6 +101,12 @@ public class GetwayController {
 			}
 			model.addAttribute("questions", map);
 			return "back-End/client/surveyQuestions";
+		} else if (option.contains("submissions")) {
+			Survey survey = surveyService.findOne(sourceId);
+			model.addAttribute("survey", survey);
+			model.addAttribute("mce", questionService.questionByType("MCE", survey));
+			model.addAttribute("oe", questionService.questionByType("OE", survey));
+			return "back-End/Admin/submissions";
 		} else {
 			return "redirect:/";
 		}

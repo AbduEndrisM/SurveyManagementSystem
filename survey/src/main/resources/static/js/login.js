@@ -17,7 +17,6 @@ function surveyTakerLogin() {
 
 function adminLogin() {
 	var formData = $('#admin_login_form').serialize();
-	alert(formData);
 	$.ajax({
 		url : 'http://localhost:9000/login/admin',
 		method : 'POST',

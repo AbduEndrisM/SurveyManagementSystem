@@ -1,5 +1,6 @@
 package com.mum.groupproject.survey.serviceimpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -8,22 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mum.groupproject.survey.dao.QuestionDao;
-import com.mum.groupproject.survey.dao.SurveyDao;
 import com.mum.groupproject.survey.domain.Question;
 import com.mum.groupproject.survey.domain.Survey;
 import com.mum.groupproject.survey.iservice.IQuestion;
 import com.mum.groupproject.survey.utility.Messages;
 
-
 @Service
 @Transactional
-public class QuestionService implements IQuestion{
+public class QuestionService implements IQuestion {
 
 	@Autowired
 	private QuestionDao questionDao;
-	
-	
-	
+
 	@Override
 	public String create(Question question) {
 		try {
@@ -63,6 +60,18 @@ public class QuestionService implements IQuestion{
 	@Override
 	public Question findOne(String id) {
 		return questionDao.findOne(id);
+	}
+
+	@Override
+	public List<Question> questionByType(String name, Survey survey) {
+		List<Question> questions = surveyQuestion(survey);
+		List<Question> list = new ArrayList<>();
+		for (Question question : questions) {
+			if (question.getQuestionType().getName().equalsIgnoreCase(name)) {
+				list.add(question);
+			}
+		}
+		return list;
 	}
 
 }

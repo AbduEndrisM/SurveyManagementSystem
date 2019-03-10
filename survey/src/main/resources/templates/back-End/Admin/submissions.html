@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from followtechnique.com/themes/bird_v1/theme/page_starter.htm by HTTrack Website Copier/3.x [XR&CO'2010], Wed, 13 Jul 2016 20:28:57 GMT -->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SURVEY MIS</title>
+
+<div data-th-replace="back-End/Layout/CSS :: myCss"></div>
+
+<link type="text/css" rel="stylesheet" href="form_tag_inputs.htm"
+	id="style">
+<link type="text/css" rel="stylesheet" href="form_tag_inputs.htm"
+	id="theme">
+
+<!-- /global stylesheets -->
+
+<!-- Core JS files -->
+
+
+
+</head>
+
+<body>
+
+	<div data-th-replace="back-End/Layout/header :: myHeader"></div>
+	<div class="page-container" style="min-height: 700px">
+		<div class="page-content">
+			<div data-th-replace="back-End/Admin/sidebar :: adminSidebar"></div>
+			<!--  <div data-th-replace="back-End/Layout/content :: myContent">-->
+			<div class="content-wrapper" data-th-fragment="myContent">
+
+				<!-- Page header -->
+				<div class="page-header">
+					<div class="page-header-content">
+
+						<ul class="breadcrumb">
+							<li><a href="#"><i class="fa fa-home"></i>Home</a></li>
+							<li><a href="survey">Surveys</a></li>
+							<li class="active">Survey's submission results</li>
+						</ul>
+
+					</div>
+				</div>
+				<!-- /page header -->
+
+
+				<!-- Content area -->
+
+				<div class="content">
+
+					<!-- <h4>
+						Meeting Details<span style="margin-left: 5px;"><i
+							class=" fa fa-info-circle"></i></span>
+					</h4> -->
+
+					<div class="row" style="margin-top: 5px;"></div>
+					<div class="col-md-12 col-md-8">
+						
+						<div class="panel panel-flat  border-top-primary"
+							id="questionList">
+							<div class="panel-heading pt-20 pl-20">
+								<span class="panel-title" style="font-size: 20px;"> <i
+									class="fa fa-tasks position-left"></i><span
+									class="text-semibold">Multiple Choice Question Results</span>
+								</span>
+
+							</div>
+
+							<div class="panel-body">
+								<div class="col-md-10 col-offset-2">
+									<div class="form-group">
+										<label for="questionType" class="control-label text-semibold">
+											Choose Question <span class="text-danger">*</span>
+										</label> <select class="form-control" name="mce" id="mce"
+											required="required">
+											<option></option>
+											<option th:each="question: ${mce}"
+												th:utext="${question.name}" th:value="${question.id}"></option>
+
+										</select>
+									</div>
+								</div>
+								<div id="mcquestions" style="margin-top: 15%;"></div>
+							</div>
+
+
+
+
+
+
+						</div>
+						<div class="panel panel-flat  border-top-primary" id="openEnded">
+							<div class="panel-heading pt-20 pl-20">
+								<span class="panel-title" style="font-size: 20px;"> <i
+									class="fa fa-tasks position-left"></i><span
+									class="text-semibold">Open Ended Questions Question
+										Results</span>
+								</span>
+
+							</div>
+
+							<div class="panel-body">
+								<div class="col-md-10 col-offset-2">
+									<div class="form-group">
+										<label for="questionType" class="control-label text-semibold">
+											Choose Question <span class="text-danger">*</span>
+										</label> <select class="form-control" name="oe" id="oe"
+											required="required">
+											<option></option>
+											<option th:each="question: ${oe}" th:utext="${question.name}"
+												th:value="${question.id}"></option>
+
+										</select>
+									</div>
+								</div>
+								<div id="openEnd" style="margin-top: 10%;">
+								  
+								</div>
+							</div>
+
+
+
+
+
+
+						</div>
+					</div>
+					<div class="col-md-12 col-md-4">
+						
+						<div class="panel panel-flat  border-top-primary"
+							id="questionList">
+							<div class="panel-heading pt-20 pl-20">
+								<span class="panel-title" style="font-size: 20px;"> <i
+									class="fa fa-tasks position-left"></i><span
+									class="text-semibold">Overview</span>
+								</span>
+
+							</div>
+
+							<div class="panel-body">
+								
+							</div>
+
+
+
+
+
+
+						</div>
+						</div>
+
+
+
+
+					<div class="row">
+						<div data-th-replace="back-End/Layout/footer :: myFooter"></div>
+					</div>
+					<div data-th-replace="/back-End/Layout/custom :: myScript"></div>
+
+
+				</div>
+
+			</div>
+		</div>
+</body>
+</html>

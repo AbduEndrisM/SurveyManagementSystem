@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mum.groupproject.survey.domain.Admin;
 import com.mum.groupproject.survey.domain.Answer;
 import com.mum.groupproject.survey.domain.Choice;
@@ -23,6 +24,7 @@ import com.mum.groupproject.survey.domain.Rate;
 import com.mum.groupproject.survey.domain.Survey;
 import com.mum.groupproject.survey.domain.SurveyTaker;
 import com.mum.groupproject.survey.domain.User;
+import com.mum.groupproject.survey.iservice.IAnswer;
 import com.mum.groupproject.survey.iservice.IChoice;
 import com.mum.groupproject.survey.iservice.IQuestion;
 import com.mum.groupproject.survey.iservice.IQuestionActivityService;
@@ -49,6 +51,9 @@ public class ActionRequest {
 
 	@Autowired
 	private IuserService userService;
+
+	@Autowired
+	private IAnswer answerService;
 
 	@Autowired
 	private IQuestionActivityService questionActivityService;
@@ -99,6 +104,13 @@ public class ActionRequest {
 
 				}
 				return questionActivityService.createQuestionActivity(activities);
+			} else if (option.contains("openQuestions")) {
+				Question q = questionService.findOne(option.split("_")[1]);
+				List<Answer> answers = answerService.openEndedAnswers(q);
+				ObjectMapper mapper = new ObjectMapper();
+				String value = mapper.writeValueAsString(answers);
+				return value;
+
 			} else {
 				return "UNKOWN REQUEST";
 			}
@@ -137,10 +149,15 @@ public class ActionRequest {
 					} else {
 						result = Messages.unknown;
 					}
+				} else if (map.get("username").equals("admin") && map.get("password").equals("admin")) {
+					result = Messages.access;
 				} else {
 					result = Messages.unknown;
 				}
+			} else {
+				return Messages.exception;
 			}
+
 		} catch (Exception e) {
 			result = Messages.exception;
 		}
