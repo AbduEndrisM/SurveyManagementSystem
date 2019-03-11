@@ -148,12 +148,37 @@ function editEvent() {
 		var selectedValue = $("#mce option:selected").attr('value');
 		drawDonut(selectedValue);
 	});
-	
+
 	$("#oe").change(function() {
 
 		var selectedValue = $("#oe option:selected").attr('value');
 		publishData(selectedValue);
 	});
+
+	$('.editSurvey').submit('click', function(event) {
+		event.preventDefault();
+		var surveyId = $(this).attr('id');
+		editSurvey(surveyId);
+	});
+
+	$('.deleteSurvey').submit('click', function(event) {
+		event.preventDefault();
+		var surveyId = $(this).attr('id');
+		deleteSurvey(surveyId);
+	});
+
+	$('.editQuestion').submit('click', function(event) {
+		event.preventDefault();
+		var questionId = $(this).attr('id');
+		updateQuestion(questionId);
+	});
+
+	$('.deleteQuestion').submit('click', function(event) {
+		event.preventDefault();
+		var questionId = $(this).attr('id');
+		deleteQuestion(questionId);
+	});
+
 })();
 
 function createSurvey() {
@@ -186,24 +211,85 @@ function createSurvey() {
 	})
 }
 
-function publishData(choosenValue) {
-	var element = '';
+function editSurvey(surveyId) {
+	var formData = {};
+	formData = $('#' + surveyId).serialize();
 	$.ajax({
-		url : 'http://localhost:9000/formSubmission/openQuestions_'
-				+ choosenValue,
+		url : 'http://localhost:9000/formSubmission/editSurvey',
 		method : 'POST',
-		data : choosenValue,
-		async : false,
+		data : formData,
 		success : function(data) {
-			var result = $.parseJSON(data);
-			for (var i = 0; i < result.length; i++) {
-				element += '<div style="padding:20px;border:1px solid #ddd;border-radius:5px;width:80%;margin-left:1%;">';
-				element += result[i].value;
-				element += '</div>';
-				element+='<div style="height : 5px;"></div>';
+			if (data == 'Record is successfully edited') {
+				new PNotify({
+					title : 'Success',
+					text : data,
+					addclass : 'alert alert-styled-left',
+					type : 'info'
+				});
+				setTimeout(function() {
+					location.reload();
+				}, 1000)
+			} else {
+				new PNotify({
+					title : 'Failure',
+					text : data,
+					addclass : 'alert alert-styled-left',
+					type : 'error'
+				});
 			}
 		}
 	})
+}
+
+function deleteSurvey(surveyId) {
+	var formData = {};
+	formData = $('#' + surveyId).serialize();
+	$.ajax({
+		url : 'http://localhost:9000/formSubmission/deleteSurvey',
+		method : 'POST',
+		data : formData,
+		success : function(data) {
+			if (data == 'Record is successfully deleted') {
+				new PNotify({
+					title : 'Success',
+					text : data,
+					addclass : 'alert alert-styled-left',
+					type : 'info'
+				});
+				setTimeout(function() {
+					location.reload();
+				}, 1000)
+			} else {
+				new PNotify({
+					title : 'Failure',
+					text : data,
+					addclass : 'alert alert-styled-left',
+					type : 'error'
+				});
+			}
+		}
+	})
+}
+
+function publishData(choosenValue) {
+	var element = '';
+	$
+			.ajax({
+				url : 'http://localhost:9000/formSubmission/openQuestions_'
+						+ choosenValue,
+				method : 'POST',
+				data : choosenValue,
+				async : false,
+				success : function(data) {
+					var result = $.parseJSON(data);
+					for (var i = 0; i < result.length; i++) {
+						element += '<div style="padding:20px;border:1px solid #ddd;border-radius:5px;width:80%;margin-left:1%;">';
+						element += result[i].value;
+						element += '</div>';
+						element += '<div style="height : 5px;"></div>';
+					}
+				}
+			})
 	$('#openEnd').empty();
 	$('#openEnd').append(element);
 }
@@ -218,6 +304,67 @@ function createQuestion() {
 		data : formData,
 		success : function(data) {
 			if (data == 'Record is successfully saved!') {
+				new PNotify({
+					title : 'Success',
+					text : data,
+					addclass : 'alert alert-styled-left',
+					type : 'info'
+				});
+				setTimeout(function() {
+					location.reload();
+				}, 1000)
+			} else {
+				new PNotify({
+					title : 'Failure',
+					text : data,
+					addclass : 'alert alert-styled-left',
+					type : 'error'
+				});
+			}
+		}
+	})
+}
+
+function deleteQuestion(questionId) {
+	var formData = {};
+	formData = $('#' + questionId).serialize();
+	$.ajax({
+		url : 'http://localhost:9000/formSubmission/deleteQuestion',
+		method : 'POST',
+		data : formData,
+		success : function(data) {
+			if (data == 'Record is successfully deleted') {
+				new PNotify({
+					title : 'Success',
+					text : data,
+					addclass : 'alert alert-styled-left',
+					type : 'info'
+				});
+				setTimeout(function() {
+					location.reload();
+				}, 1000)
+			} else {
+				new PNotify({
+					title : 'Failure',
+					text : data,
+					addclass : 'alert alert-styled-left',
+					type : 'error'
+				});
+			}
+		}
+	})
+}
+
+function updateQuestion(questionId) {
+	var formData = {};
+	formData = $('#' + questionId).serialize();
+	var url1 = 'http://localhost:9000/formSubmission/editQuestion'
+	$.ajax({
+		url : url1,
+		method : 'POST',
+		data : formData,
+		success : function(data) {
+			if (data == 'Record is successfully edited') {
 				new PNotify({
 					title : 'Success',
 					text : data,
@@ -290,7 +437,16 @@ function submitAnswers() {
 				data : submitedData,
 				success : function(data) {
 					if (data == 'Survey is successfully submited,thanks for your participation') {
-						successMessage(data);
+						new PNotify({
+							title : 'Success',
+							text : data,
+							addclass : 'alert alert-styled-left',
+							type : 'info'
+						});
+						setTimeout(function() {
+							location.href = "resultPage";
+						}, 1000)
+
 					} else {
 						failureMessage(data);
 					}

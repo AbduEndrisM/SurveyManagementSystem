@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.mum.groupproject.survey.domain.Admin;
 import com.mum.groupproject.survey.domain.Answer;
 import com.mum.groupproject.survey.domain.Choice;
 import com.mum.groupproject.survey.domain.Question;
@@ -32,6 +33,7 @@ import com.mum.groupproject.survey.domain.Survey;
 import com.mum.groupproject.survey.iservice.IChoice;
 import com.mum.groupproject.survey.iservice.IQuestion;
 import com.mum.groupproject.survey.iservice.IQuestionType;
+import com.mum.groupproject.survey.iservice.IRate;
 import com.mum.groupproject.survey.iservice.ISurvey;
 import com.mum.groupproject.survey.utility.Messages;
 import com.mum.groupproject.survey.utility.Test;
@@ -52,6 +54,9 @@ public class GetwayController {
 
 	@Autowired
 	private IChoice choiceService;
+	
+	@Autowired
+	private IRate rateService;
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String adminAccess() {
@@ -59,7 +64,7 @@ public class GetwayController {
 	}
 
 	@RequestMapping(value = "/{option}", method = RequestMethod.GET)
-	public String pageNavigation(@PathVariable("option") String option, ModelMap model) {
+	public String pageNavigation(@PathVariable("option") String option, ModelMap model,HttpSession session) {
 		String sourceId = option.contains("_") ? option.split("_")[1] : "";
 
 		if (option.equals("survey")) {
@@ -69,6 +74,7 @@ public class GetwayController {
 		} else if (option.contains("questions")) {
 			Survey survey = surveyService.findOne(sourceId);
 			List<Question> questions = questionService.surveyQuestion(survey);
+			session.setAttribute("surveyId", survey.getId());
 			model.addAttribute("types", typeService.allTypes());
 			model.addAttribute("surveyId", sourceId);
 			model.addAttribute("questions", questions);
@@ -93,7 +99,7 @@ public class GetwayController {
 			Map<Question, List<Choice>> map = new HashMap<>();
 			model.addAttribute("survey", survey);
 			for (Question q : list) {
-				if (q.getQuestionType().getName().equals("MCE")) {
+				if (q.getQuestionType().getName().equals("MC")) {
 					map.put(q, choiceService.questionChoices(q));
 				} else {
 					map.put(q, null);
@@ -102,12 +108,17 @@ public class GetwayController {
 			model.addAttribute("questions", map);
 			return "back-End/client/surveyQuestions";
 		} else if (option.contains("submissions")) {
+			
 			Survey survey = surveyService.findOne(sourceId);
 			model.addAttribute("survey", survey);
-			model.addAttribute("mce", questionService.questionByType("MCE", survey));
+			model.addAttribute("mce", questionService.questionByType("MC", survey));
 			model.addAttribute("oe", questionService.questionByType("OE", survey));
+			model.addAttribute("rates", rateService.rateQuestions(survey));
 			return "back-End/Admin/submissions";
-		} else {
+		}else if(option.equals("profile")){
+			Admin admin = (Admin)session.getAttribute("admin");
+			return "back-End/Admin/profile";
+		}else {
 			return "redirect:/";
 		}
 	}

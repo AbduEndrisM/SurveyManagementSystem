@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  mysql-server:
+    image: mysql/mysql-server
+    ports:
+       - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=hexakomb
+      - MYSQL_DATABASE=survey_system
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=hexakomb
+
+     
+
+     
+     
+    volumes:
+      - /data/mysql
+  survey:
+    image: survey
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql-server
+     
+    environment:
+      - DATABASE_HOST =mysql-server
+      - DATABASE_USER =root
+      - DATABASE_PASSWORD =hexakomb
+      - DATABASE_NAME =survey_system
+      - DATABASE_PORT =3306
+      
+   
+    volumes: 
+      - /data/survey

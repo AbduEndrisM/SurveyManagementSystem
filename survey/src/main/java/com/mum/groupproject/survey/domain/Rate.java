@@ -79,5 +79,9 @@ public class Rate extends QuestionActivity{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	public Rate() {
+		super(null, null);
+	}
 
 }

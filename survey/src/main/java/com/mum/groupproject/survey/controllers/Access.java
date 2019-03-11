@@ -17,6 +17,7 @@ import com.mum.groupproject.survey.domain.Choice;
 import com.mum.groupproject.survey.domain.Question;
 import com.mum.groupproject.survey.domain.QuestionType;
 import com.mum.groupproject.survey.domain.Survey;
+import com.mum.groupproject.survey.domain.SurveyTaker;
 import com.mum.groupproject.survey.iservice.IChoice;
 import com.mum.groupproject.survey.iservice.IQuestion;
 import com.mum.groupproject.survey.iservice.IQuestionType;
@@ -24,7 +25,12 @@ import com.mum.groupproject.survey.iservice.ISurvey;
 import com.mum.groupproject.survey.utility.Messages;
 import com.mum.groupproject.survey.utility.ToResuse;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 
 import javax.servlet.http.HttpSession;
@@ -44,6 +50,8 @@ public class Access {
 	@Autowired
 	private IChoice choiceService;
 
+	String line = "";
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String landing(ModelMap model, HttpSession session) {
 		session.removeAttribute("admin");
@@ -54,7 +62,7 @@ public class Access {
 	}
 
 	@RequestMapping(value = "/{option}", method = RequestMethod.GET)
-	public String pageNavigation(@PathVariable("option") String option, ModelMap model) {
+	public String pageNavigation(@PathVariable("option") String option, ModelMap model,HttpSession session) {
 		String sourceId = option.contains("_") ? option.split("_")[1] : "";
 
 		if (option.equals("survey")) {
@@ -88,19 +96,26 @@ public class Access {
 			Map<Question, List<Choice>> map = new HashMap<>();
 			model.addAttribute("survey", survey);
 			for (Question q : list) {
-				if (q.getQuestionType().getName().equals("MCE")) {
+				if (q.getQuestionType().getName().equals("MC")) {
 					map.put(q, choiceService.questionChoices(q));
 				} else {
 					map.put(q, null);
 				}
 			}
+
 			model.addAttribute("questions", map);
 			return "back-End/client/surveyQuestions";
+		} else if (option.equals("account")) {
+			SurveyTaker taker = (SurveyTaker)session.getAttribute("taker");
+			model.addAttribute("taker", taker);
+			return "back-End/client/account";
+		} else if (option.equals("resultPage")) {
+			return "back-End/client/resultPage";
 		} else {
 			return "redirect:/";
 		}
 	}
-	
+
 	@SuppressWarnings("null")
 	@RequestMapping(value = "/data/uploadExcel", method = RequestMethod.POST)
 	public String upload(@RequestParam("attachment") MultipartFile file, RedirectAttributes redirectAttributes,
@@ -111,87 +126,57 @@ public class Access {
 
 			String name = originalFile.getName();
 
-			if (name.endsWith(".csv") || name.endsWith(".xlsm") || name.endsWith(".xlx")) {
-				// Get length of file in bytes
-				long fileSizeInBytes = file.getSize();
-				// Convert the bytes to Kilobytes (1 KB = 1024 Bytes)
-				double fileSizeInKB = fileSizeInBytes / 1024;
-				// Convert the KB to MegaBytes (1 MB = 1024 KBytes)
-				double fileSizeInMB = fileSizeInKB / 1024;
+			Survey survey = surveyService.findOne(params.get("surveyId"));
 
-				if (fileSizeInMB <= 5) {
-
-					XSSFWorkbook workbook = new XSSFWorkbook(originalFile);
-					XSSFSheet sheet = workbook.getSheetAt(0);
-					Row row;
-
-					for (int i = 4; i <= sheet.getLastRowNum(); i++) {
-						row = (Row) sheet.getRow(i);
-
-						Question q = new Question();
-
-						if (row.getCell(0) == null && row.getCell(1) == null && row.getCell(2) == null
-								&& row.getCell(3) == null) {
-							break;
-						}
-
-						// getting profile title
-						if (row.getCell(0) == null) {
-
-							q.setName("");
-						} else {
-							q.setName(row.getCell(0).toString());
-
-						}
-						QuestionType type = new QuestionType();
-						// getting profile firstName
-						if (row.getCell(1) == null) {
-
-						} else {
-							type = typeService.findByName(row.getCell(1).toString());
-							if (type == null) {
-								type.setName(row.getCell(1).toString());
-								typeService.create(type);
-								q.setQuestionType(type);
-							}
-						}
-						List<Choice> list = new ArrayList<>();
-						if (row.getCell(1).toString().equalsIgnoreCase("MC")) {
-							Choice choice = new Choice();
-							choice.setValue(row.getCell(2).toString());
-							Choice choice1 = new Choice();
-							choice1.setValue(row.getCell(3).toString());
-							Choice choice2 = new Choice();
-							choice2.setValue(row.getCell(4).toString());
-							Choice choice3 = new Choice();
-							choice3.setValue(row.getCell(5).toString());
-
-							list.add(choice);
-							list.add(choice1);
-							list.add(choice2);
-							list.add(choice3);
-						}
-						typeService.create(type);
-						q.setQuestionType(type);
-						questionService.create(q);
-						if (!list.isEmpty()) {
-							for (Choice c : list) {
-								c.setQuestion(q);
-								choiceService.create(c);
-							}
+			BufferedReader reader = new BufferedReader(new FileReader(originalFile));
+			while ((line = reader.readLine()) != null) {
+				String data[] = line.split(",");
+				Question question = new Question();
+				question.setName(data[0]);
+				QuestionType type = typeService.findByName(data[1]);
+				if (type == null) {
+					type = new QuestionType();
+					type.setName(data[1]);
+					typeService.create(type);
+				}
+				List<Choice> list = new ArrayList<>();
+				if (data[1].equalsIgnoreCase("MC")) {
+					Choice c = new Choice();
+					c.setValue(data[2]);
+					Choice c1 = new Choice();
+					c1.setValue(data[3]);
+					Choice c2 = new Choice();
+					c2.setValue(data[4]);
+					Choice c3 = new Choice();
+					c3.setValue(data[5]);
+					
+					if (data.length == 7) {
+						if (Integer.parseInt(data[6]) == 1) {
+							c.setChoosen(true);
+						} else if (Integer.parseInt(data[6]) == 2) {
+							c1.setChoosen(true);
+						} else if (Integer.parseInt(data[6]) == 3) {
+							c2.setChoosen(true);
+						} else if (Integer.parseInt(data[6]) == 4) {
+							c3.setChoosen(true);
 						}
 					}
-
-					String message = Messages.save;
-					redirectAttributes.addFlashAttribute("Success", message);
-				} else {
-					redirectAttributes.addFlashAttribute("Failure", "Sorry Excel Sheet Must Not Exceed ");
-					System.out.println("Sorry Excel Sheet Must Not Exceed ");
+					list.add(c);
+					list.add(c1);
+					list.add(c2);
+					list.add(c3);
 				}
-			} else {
-				redirectAttributes.addFlashAttribute("Failure", "Sorry you are trying to upload Non-Excel Sheet");
-				System.out.println("Sorry Excel Sheet Must Not Exceed ");
+				question.setSurvey(survey);
+				question.setQuestionType(type);
+				questionService.create(question);
+				if (list.size() > 0) {
+					for (Choice c : list) {
+						c.setQuestion(question);
+						choiceService.create(c);
+					}
+				}
 			}
+
 		}
 		return "redirect:/";
 	}

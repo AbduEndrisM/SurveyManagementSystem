@@ -13,7 +13,9 @@ public class QuestionDao extends GenericDao<Question> {
 	public List<Question> allQuesitons() {
 		List<Question> list = new ArrayList<>();
 		for (Question q : allObejcts()) {
+			if(!q.isDeleted()) {
 			list.add(q);
+			}
 		}
 		return list;
 	}

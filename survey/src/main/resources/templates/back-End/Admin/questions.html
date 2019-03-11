@@ -64,9 +64,8 @@
 								class="text-semibold">All Questions</span>
 							</span>
 							<div class="pull-right">
-								<button class="btn btn-info"
-									data-toggle="modal"
-										data-target="#forgetPassword">
+								<button class="btn btn-info" data-toggle="modal"
+									data-target="#forgetPassword">
 									<span class="text-semibold">Upload</span><i
 										class="fa fa-upload"></i>
 								</button>
@@ -84,9 +83,9 @@
 										<tr class="text-semi-bold;"
 											style="background-color: #394f72; color: #FFF;">
 											<th class="text-bold">Name</th>
-											<th class="text-bold">Description</th>
-
 											<th class="text-bold">Question Type</th>
+
+											<th class="text-bold">Choices</th>
 											<th class="text-bold"><span class="pull-right">Actions</span></th>
 
 
@@ -96,28 +95,146 @@
 										<tr th:each="question :${questions}">
 											<td class="text-semibold"><a href="#"><span
 													th:text="${question.name}" class="plainText"></span></a></td>
-											<td class="text-semibold"><a><span
-													th:text="${question.description}" class="plainText"></span></a></td>
+
 											<td class="text-semibold"><a><span
 													th:text="${question.questionType.name}" class="plainText"></span></a></td>
+
+											<td class="text-semibold"><a><span
+													th:if="${question.questionType.name} == MC OR ${question.questionType.name} == dropdown "
+													} class="plainText"><a style="width: 50%;"
+														th:href="${'choices_'+question.id}"
+														class=" btn btn-sm btn-info"
+														th:if="${question.questionType.name} == MC OR ${question.questionType.name} == dropdown "><i
+															class="fa fa-check-square-o"></i></a></span></a></td>
 
 
 
 
 
 											<td><span class="pull-right">
-													<div class="form-group">
-														<a style="width: 50%;" th:href="${'choices_'+question.id}"
-															class=" btn btn-sm btn-info pull-right"
-															th:if="${question.questionType.name} == MCE OR ${question.questionType.name} == dropdown "><i
-															class="fa fa-check-square-o"></i></a>
-														<button class="btn btn-default pull-right"
-															style="margin-left: 5px; margin-top: 2px;">
-															<i class="fa fa-edit"></i>
-														</button>
-													</div>
+
+
+													<button class="btn btn-primary pull-right"
+														style="margin-left: 5px; margin-top: 2px;" data-toggle="modal" th:data-target="${'#delete_'+question.id}">
+														<i class="fa fa-trash"></i>
+													</button>
+													<button class="btn btn-default pull-right"
+														style="margin-left: 5px; margin-top: 2px;"  data-toggle="modal" th:data-target="${'#edit_'+question.id}">
+														<i class="fa fa-edit"></i>
+													</button>
+
+
 											</span></td>
+
+											<div th:id="${'edit_'+question.id}" class="modal fade">
+												<div class="modal-dialog modal-sm">
+													<form method="POST" th:id="${'editQuestion_'+question.id}" class="editQuestion">
+														<div class="modal-content">
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal">&times;</button>
+																<h4 class="modal-title">
+																	<b>EDIT QUESTION DETAILS</b>
+																</h4>
+															</div>
+
+															<div class="modal-body">
+																<div class="row">
+																	<div class="col-sm-12">
+																		<div class="col-md-12">
+																			<div class="form-group">
+																				<label for="name"
+																					class="control-label text-semibold">
+																					Question title <span class="text-danger">*</span>
+																				</label> <input type="text" name="name"
+																					class="form-control input-roundless"
+																					id="questionName" required="required"
+																					th:value="${question.name}" />
+																			</div>
+																		</div>
+																		<div class="col-md-12">
+																			<div class="form-group">
+																				<label for="description"
+																					class="control-label text-semibold">
+																					Question Description <span class="required">*</span>
+																				</label>
+																				<textarea rows="6" id="questionDescription"
+																					name="description"
+																					class="form-control input-roundless"
+																					th:text="${question.description}"
+																					th:value="${question.description}"></textarea>
+																			</div>
+																		</div>
+
+																		<div class="col-md-12">
+																			<div class="form-group">
+																				<label for="questionType"
+																					class="control-label text-semibold"> Choose
+																					Question Type <span class="text-danger">*</span>
+																				</label> <select class="form-control" name="typeId"
+																					id="typeId" required="required">
+																					<option th:text="${question.questionType.name}"
+																						th:value="${question.questionType.uuid}"></option>
+																					<option th:each="type: ${types}"
+																						th:utext="${type.name}" th:value="${type.uuid}"></option>
+
+																				</select>
+																			</div>
+																		</div>
+																		<input type="hidden" th:value="${question.id}"
+																			name="questionId" />
+
+
+																	</div>
+																</div>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-default"
+																	data-dismiss="modal">
+																	<i class="fa fa-close"></i>Cancel
+																</button>
+																<button type="submit" class="btn btn-primary">
+																	<i class="fa fa-check"></i>Submit
+																</button>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+											<div th:id="${'delete_'+question.id}" class="modal fade">
+												<div class="modal-dialog modal-sm">
+													<form method="POST" th:id="${'deleteQuestion_'+question.id}"  class="deleteQuestion">
+														<div class="modal-content">
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal">&times;</button>
+																<h4 class="modal-title">
+																	<b>DELETE QUESTION</b>
+																</h4>
+															</div>
+
+															<div class="modal-body">
+																<div class="row">
+																	<div class="col-md-12">
+																		<h4>ARE YOU SURE YOU WANT TO DELETE THIS QUESTION?</h4>
+																	</div>
+																	<input type="hidden" th:value="${question.id}"
+																		name="questionId" id="questionId" />
+																</div>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-default"
+																	data-dismiss="modal">
+																	<i class="fa fa-close"></i>Cancel
+																</button>
+																<button type="submit" class="btn btn-primary">
+																	<i class="fa fa-check"></i>Submit
+																</button>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
 										</tr>
+
 									</tbody>
 
 								</table>
@@ -133,47 +250,47 @@
 					<div id="forgetPassword" class="modal fade">
 						<div class="modal-dialog modal-sm">
 							<form th:action="@{/data/uploadExcel}" method="post"
-									enctype="multipart/form-data">
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal">&times;</button>
-											<h4 class="modal-title">UPLOAD CSV FILE</h4>
-										</div>
+								enctype="multipart/form-data">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+										<h4 class="modal-title">UPLOAD CSV FILE</h4>
+									</div>
 
-										<div class="modal-body">
-											<div class="col-md-12">
-												<div class="form-group">
-													<label for="excelSheet" class="control-label text-semibold">
-														Choose Csv File <span class="text-danger">*</span>
-
-													</label> <input type="file" class="file-input" name="attachment"
-														required="required" />
-												</div>
-											</div>
-
-										</div>
-
+									<div class="modal-body">
 										<div class="col-md-12">
 											<div class="form-group">
+												<label for="excelSheet" class="control-label text-semibold">
+													Choose Csv File <span class="text-danger">*</span>
 
-												</label> <input type="hidden" name="eventId"
-													class="form-control input-roundless" id="eventId" required
-													th:value="${surveyId}">
+												</label> <input type="file" class="file-input" name="attachment"
+													required="required" />
 											</div>
 										</div>
 
+									</div>
 
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default"
-												data-dismiss="modal">
-												<i class="fa fa-ban"></i>Cancel
-											</button>
-											<button type="submit" class="btn btn-primary">
-												<i class="fa fa-save"></i>Save
-											</button>
+									<div class="col-md-12">
+										<div class="form-group">
+
+											</label> <input type="hidden" name="surveyId"
+												class="form-control input-roundless" id="surveyId" required
+												th:value="${surveyId}">
 										</div>
 									</div>
-								</form>
+
+
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">
+											<i class="fa fa-ban"></i>Cancel
+										</button>
+										<button type="submit" class="btn btn-primary">
+											<i class="fa fa-save"></i>Save
+										</button>
+									</div>
+								</div>
+							</form>
 						</div>
 					</div>
 					<div id="newQuestion" class="hidden">
@@ -245,7 +362,7 @@
 						</div>
 					</div>
 
-					
+
 
 
 					<div class="row">

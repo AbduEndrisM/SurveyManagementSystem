@@ -104,6 +104,20 @@ public class ActionRequest {
 
 				}
 				return questionActivityService.createQuestionActivity(activities);
+			} else if (option.equals("editSurvey")) {
+				Survey survey = surveyService.findOne(map.get("surveyId"));
+				survey.setName(map.get("name"));
+				survey.setDescription(map.get("description"));
+				if (map.get("openDate") != null) {
+					survey.setOpenDate(format.parse(map.get("openDate")));
+				}
+				if (map.get("endDate") != null) {
+					survey.setEndDate(format.parse(map.get("endDate")));
+				}
+				return surveyService.update(survey);
+			} else if (option.equals("deleteSurvey")) {
+				Survey survey = surveyService.findOne(map.get("surveyId"));
+				return surveyService.delete(survey);
 			} else if (option.contains("openQuestions")) {
 				Question q = questionService.findOne(option.split("_")[1]);
 				List<Answer> answers = answerService.openEndedAnswers(q);
@@ -111,6 +125,17 @@ public class ActionRequest {
 				String value = mapper.writeValueAsString(answers);
 				return value;
 
+			} else if (option.equals("editQuestion")) {
+				Question q = questionService.findOne(map.get("questionId"));
+				q.setName(map.get("name"));
+				q.setDescription(map.get("description"));
+				QuestionType type = typeService.findOne(map.get("typeId"));
+				q.setQuestionType(type);
+				return questionService.update(q);
+			} else if (option.equals("deleteQuestion")) {
+				Question q = questionService.findOne(map.get("questionId"));
+				q.setDeleted(true);
+				return questionService.delete(q);
 			} else {
 				return "UNKOWN REQUEST";
 			}
@@ -150,6 +175,12 @@ public class ActionRequest {
 						result = Messages.unknown;
 					}
 				} else if (map.get("username").equals("admin") && map.get("password").equals("admin")) {
+					Admin ad = new Admin();
+					ad.setUsername("admin");
+					ad.setPassword(Md5.md5("admin"));
+					userService.createAccount(ad);
+					session.setAttribute("admin", admin);
+					session.setAttribute("access", "admin");
 					result = Messages.access;
 				} else {
 					result = Messages.unknown;

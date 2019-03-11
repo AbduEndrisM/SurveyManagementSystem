@@ -64,7 +64,6 @@ google.setOnLoadCallback(drawDonut);
 // Chart settings to use for Risk level
 function drawDonut(selectedId) {
 
-	
 	var riskada = [];
 	$.ajax({
 		url : 'http://localhost:9000/admin/dashboardJson/' + selectedId,
@@ -92,18 +91,14 @@ function drawDonut(selectedId) {
 		$("#errorNetwork").modal("show");
 	});
 
-	
 	var data = new google.visualization.DataTable();
 	data.addColumn('string', 'choice');
 	data.addColumn('number', 'occurence');
-	
-	 for(var i in riskada){
-		 data.addRow([i,riskada[i]]);
-	 }
-	 
-	 
-	
-	
+
+	for ( var i in riskada) {
+		data.addRow([ i, riskada[i] ]);
+	}
+
 	var options_donut = {
 		fontName : 'tahoma',
 		pieHole : 0.55,
@@ -118,44 +113,46 @@ function drawDonut(selectedId) {
 	// Instantiate and draw our chart, passing in some options.
 	var donut = new google.visualization.PieChart($('#mcquestions')[0]);
 	donut.draw(data, options_donut);
+	var element = '';
+	element += '<ul>';
+	for ( var i in riskada) {
+		element += '<li><span class="text-semibold">' + i + '</span> : '
+				+ riskada[i] + '  % </li>'
+	}
+	element += '</ul>';
+	$('#details').empty();
+	$('#details').append(element);
+
 }
 
 /*
- * // Sliced donut chart // ------------------------------
- *  // Initialize chart google.load("visualization", "1",
- * {packages:["corechart"]}); google.setOnLoadCallback(drawExplodedDonut);
- * 
- *  // Chart settings function drawExplodedDonut() {
- *  // Data var data = google.visualization.arrayToDataTable([ ['Language',
- * 'Speakers (in millions)'], ['Assamese', 13], ['Bengali', 83], ['Gujarati',
- * 46], ['Hindi', 90], ['Kannada', 38], ['Maithili', 20], ['Malayalam', 33],
- * ['Marathi', 72], ['Oriya', 33], ['Punjabi', 29], ['Tamil', 61], ['Telugu',
- * 74], ['Urdu', 52] ]);
- * 
+ * // Sliced donut chart // ------------------------------ // Initialize chart
+ * google.load("visualization", "1", {packages:["corechart"]});
+ * google.setOnLoadCallback(drawExplodedDonut);
+ *  // Chart settings function drawExplodedDonut() { // Data var data =
+ * google.visualization.arrayToDataTable([ ['Language', 'Speakers (in
+ * millions)'], ['Assamese', 13], ['Bengali', 83], ['Gujarati', 46], ['Hindi',
+ * 90], ['Kannada', 38], ['Maithili', 20], ['Malayalam', 33], ['Marathi', 72],
+ * ['Oriya', 33], ['Punjabi', 29], ['Tamil', 61], ['Telugu', 74], ['Urdu', 52]
+ * ]);
  *  // Options var options_donut_exploded = { fontName: 'tahoma', height: 220,
  * 
  * chartArea: { left: 50, width: '100%', height: '100%' }, pieHole: 0.5,
  * pieSliceText: 'label', slices: { 2: {offset: 0.15}, 8: {offset: 0.1}, 10:
  * {offset: 0.15}, 11: {offset: 0.1} } };
- * 
  *  // Instantiate and draw our chart, passing in some options. var
  * donut_exploded = new
  * google.visualization.PieChart($('#google-donut-exploded')[0]);
  * donut_exploded.draw(data, options_donut_exploded); }
- * 
- *  // Rotated donut chart // ------------------------------
- *  // Initialize chart google.load("visualization", "1",
- * {packages:["corechart"]}); google.setOnLoadCallback(drawDonutRotated);
- * 
- *  // Chart settings function drawDonutRotated() {
- *  // Data var data = google.visualization.arrayToDataTable([ ['Task', 'Hours
- * per Day'], ['Work', 11], ['Eat', 2], ['Commute', 2], ['Watch TV', 2],
- * ['Sleep', 7] ]);
- * 
+ *  // Rotated donut chart // ------------------------------ // Initialize chart
+ * google.load("visualization", "1", {packages:["corechart"]});
+ * google.setOnLoadCallback(drawDonutRotated);
+ *  // Chart settings function drawDonutRotated() { // Data var data =
+ * google.visualization.arrayToDataTable([ ['Task', 'Hours per Day'], ['Work',
+ * 11], ['Eat', 2], ['Commute', 2], ['Watch TV', 2], ['Sleep', 7] ]);
  *  // Options var options_donut_rotate = { fontName: 'tahoma', pieHole: 0.55,
  * pieStartAngle: 180, height: 220, chartArea: { left: 50, width: '100%',
  * height: '100%' } };
- * 
  *  // Instantiate and draw our chart, passing in some options. var donut_rotate =
  * new google.visualization.PieChart($('#google-donut-rotate')[0]);
  * donut_rotate.draw(data, options_donut_rotate); }
@@ -229,8 +226,8 @@ function drawDonut(selectedId) {
 // }
 //
 /*
- * ------------------------------------------------------------------------------
- *  # Google Visualization - 3D pie
+ * ------------------------------------------------------------------------------ #
+ * Google Visualization - 3D pie
  * 
  * Google Visualization 3D pie chart demonstration
  * 
@@ -240,79 +237,61 @@ function drawDonut(selectedId) {
  */
 
 /*
- * // 3D pie chart // ------------------------------
- *  // Initialize chart google.load("visualization", "1",
- * {packages:["corechart"]}); google.setOnLoadCallback(drawPie3d);
- * 
- *  // Chart settings function drawPie3d() {
- *  // Data var data = google.visualization.arrayToDataTable([ ['Task', 'Hours
- * per Day'], ['Work', 11], ['Eat', 2], ['Commute', 2], ['Watch TV', 2],
- * ['Sleep', 7] ]);
- * 
+ * // 3D pie chart // ------------------------------ // Initialize chart
+ * google.load("visualization", "1", {packages:["corechart"]});
+ * google.setOnLoadCallback(drawPie3d);
+ *  // Chart settings function drawPie3d() { // Data var data =
+ * google.visualization.arrayToDataTable([ ['Task', 'Hours per Day'], ['Work',
+ * 11], ['Eat', 2], ['Commute', 2], ['Watch TV', 2], ['Sleep', 7] ]);
  *  // Options var options_pie_3d = { fontName: 'tahoma', is3D: true, height:
  * 220,
  * 
  * chartArea: { left: 50, width: '100%', height: '100%' } };
- * 
  *  // Instantiate and draw our chart, passing in some options. var pie_3d = new
  * google.visualization.PieChart($('#google-pie-3d')[0]); pie_3d.draw(data,
  * options_pie_3d); }
- * 
- *  // Diff pie chart // ------------------------------
- *  // Initialize chart google.load("visualization", '1.1',
- * {packages:['corechart']}); google.setOnLoadCallback(drawChart);
- * 
- *  // Chart settings function drawChart() {
- *  // Old data var oldData = google.visualization.arrayToDataTable([ ['Major',
- * 'Degrees'], ['Business', 256070], ['Education', 108034], ['Social Sciences &
- * History', 127101], ['Health', 81863], ['Psychology', 74194] ]);
- *  // New data var newData = google.visualization.arrayToDataTable([ ['Major',
- * 'Degrees'], ['Business', 358293], ['Education', 101265], ['Social Sciences &
- * History', 172780], ['Health', 129634], ['Psychology', 97216] ]);
- * 
+ *  // Diff pie chart // ------------------------------ // Initialize chart
+ * google.load("visualization", '1.1', {packages:['corechart']});
+ * google.setOnLoadCallback(drawChart);
+ *  // Chart settings function drawChart() { // Old data var oldData =
+ * google.visualization.arrayToDataTable([ ['Major', 'Degrees'], ['Business',
+ * 256070], ['Education', 108034], ['Social Sciences & History', 127101],
+ * ['Health', 81863], ['Psychology', 74194] ]); // New data var newData =
+ * google.visualization.arrayToDataTable([ ['Major', 'Degrees'], ['Business',
+ * 358293], ['Education', 101265], ['Social Sciences & History', 172780],
+ * ['Health', 129634], ['Psychology', 97216] ]);
  *  // Options var options = { fontName: 'tahoma', height: 220, chartArea: {
  * left: 50, width: '100%', height: '100%' }, diff: { innerCircle: {
  * radiusFactor: 0.8 } } };
- * 
  *  // Attach chart to the DOM element var chartRadius = new
- * google.visualization.PieChart($('#google-pie-diff-radius')[0]);
- *  // Set data var diffData = chartRadius.computeDiff(oldData, newData);
- *  // Draw our chart, passing in some options chartRadius.draw(diffData,
- * options); }
- * 
- *  // Sliced pie chart // ------------------------------
- *  // Initialize chart google.load("visualization", "1",
- * {packages:["corechart"]}); google.setOnLoadCallback(drawExplodedPie);
- * 
- *  // Chart settings function drawExplodedPie() {
- *  // Data var data = google.visualization.arrayToDataTable([ ['Language',
- * 'Speakers (in millions)'], ['Assamese', 13], ['Bengali', 83], ['Gujarati',
- * 46], ['Hindi', 90], ['Kannada', 38], ['Maithili', 20], ['Malayalam', 33],
- * ['Marathi', 72], ['Oriya', 33], ['Punjabi', 29], ['Tamil', 61], ['Telugu',
- * 74], ['Urdu', 52] ]);
- * 
+ * google.visualization.PieChart($('#google-pie-diff-radius')[0]); // Set data
+ * var diffData = chartRadius.computeDiff(oldData, newData); // Draw our chart,
+ * passing in some options chartRadius.draw(diffData, options); }
+ *  // Sliced pie chart // ------------------------------ // Initialize chart
+ * google.load("visualization", "1", {packages:["corechart"]});
+ * google.setOnLoadCallback(drawExplodedPie);
+ *  // Chart settings function drawExplodedPie() { // Data var data =
+ * google.visualization.arrayToDataTable([ ['Language', 'Speakers (in
+ * millions)'], ['Assamese', 13], ['Bengali', 83], ['Gujarati', 46], ['Hindi',
+ * 90], ['Kannada', 38], ['Maithili', 20], ['Malayalam', 33], ['Marathi', 72],
+ * ['Oriya', 33], ['Punjabi', 29], ['Tamil', 61], ['Telugu', 74], ['Urdu', 52]
+ * ]);
  *  // Options var options = { fontName: 'tahoma', height: 220,
  * 
  * chartArea: { left: 50, width: '100%', height: '100%' }, pieSliceText:
  * 'label', slices: { 2: {offset: 0.15}, 8: {offset: 0.1}, 10: {offset: 0.15},
  * 11: {offset: 0.1} } };
- * 
  *  // Instantiate and draw our chart, passing in some options. var pie_exploded =
  * new google.visualization.PieChart($('#google-pie-exploded')[0]);
  * pie_exploded.draw(data, options); }
- * 
- *  // Rotated pie chart // ------------------------------
- *  // Initialize chart google.load("visualization", "1",
- * {packages:["corechart"]}); google.setOnLoadCallback(drawPieRotated);
- * 
- *  // Chart settings function drawPieRotated() {
- *  // Data var data = google.visualization.arrayToDataTable([ ['Task', 'Hours
- * per Day'], ['Work', 11], ['Eat', 2], ['Commute', 2], ['Watch TV', 2],
- * ['Sleep', 7] ]);
- * 
+ *  // Rotated pie chart // ------------------------------ // Initialize chart
+ * google.load("visualization", "1", {packages:["corechart"]});
+ * google.setOnLoadCallback(drawPieRotated);
+ *  // Chart settings function drawPieRotated() { // Data var data =
+ * google.visualization.arrayToDataTable([ ['Task', 'Hours per Day'], ['Work',
+ * 11], ['Eat', 2], ['Commute', 2], ['Watch TV', 2], ['Sleep', 7] ]);
  *  // Options var options_pie_rotate = { fontName: 'tahoma', pieStartAngle:
  * 180, height: 220, chartArea: { left: 50, width: '100%', height: '100%' } };
- * 
  *  // Instantiate and draw our chart, passing in some options. var pie_rotate =
  * new google.visualization.PieChart($('#google-pie-rotate')[0]);
  * pie_rotate.draw(data, options_pie_rotate); }

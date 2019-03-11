@@ -58,7 +58,9 @@
 
 					<div class="row" style="margin-top: 5px;"></div>
 					<div class="col-md-12 col-md-8">
-						
+
+
+
 						<div class="panel panel-flat  border-top-primary"
 							id="questionList">
 							<div class="panel-heading pt-20 pl-20">
@@ -84,6 +86,7 @@
 									</div>
 								</div>
 								<div id="mcquestions" style="margin-top: 15%;"></div>
+								<div id="details" style="margin-top: 1%;"></div>
 							</div>
 
 
@@ -116,9 +119,7 @@
 										</select>
 									</div>
 								</div>
-								<div id="openEnd" style="margin-top: 10%;">
-								  
-								</div>
+								<div id="openEnd" style="margin-top: 10%;"></div>
 							</div>
 
 
@@ -129,19 +130,23 @@
 						</div>
 					</div>
 					<div class="col-md-12 col-md-4">
-						
+
 						<div class="panel panel-flat  border-top-primary"
 							id="questionList">
 							<div class="panel-heading pt-20 pl-20">
 								<span class="panel-title" style="font-size: 20px;"> <i
 									class="fa fa-tasks position-left"></i><span
-									class="text-semibold">Overview</span>
+									class="text-semibold">Questions Rates</span>
 								</span>
 
 							</div>
 
 							<div class="panel-body">
-								
+								<ul th:each="question:${rates}">
+									<li><span class="text-semibold"
+										th:text="${question.key.name+' : '}"></span><span
+										th:text="${question.value}"></span></li>
+								</ul>
 							</div>
 
 
@@ -150,7 +155,7 @@
 
 
 						</div>
-						</div>
+					</div>
 
 
 
@@ -159,6 +164,8 @@
 						<div data-th-replace="back-End/Layout/footer :: myFooter"></div>
 					</div>
 					<div data-th-replace="/back-End/Layout/custom :: myScript"></div>
+
+					<script src="/js/charts/google/bars.js"></script>
 
 
 				</div>

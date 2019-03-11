@@ -58,7 +58,7 @@
 								class="text-semibold">All Surveys</span>
 							</span>
 							<div class="pull-right">
-							
+
 								<button class="btn btn-default"
 									onclick="showAndHide('#surveyList','#newSurvey')">
 									<span class="text-semibold">NEW</span><i class="fa fa-plus"></i>
@@ -108,10 +108,133 @@
 												style="width: 50%; margin: auto; background-color: #394f72; color: white;"
 												class=" btn btn-sm btn-info"><i
 													class="fa fa-info-circle"></i></a></span></td>
-											<td><span class="pull-right"> <a
-													class="btn btn-default"> <i class="fa fa-edit"></i>
-												</a>
+											<td><span class="pull-right">
+													<button class="btn btn-default" data-toggle="modal"
+														th:data-target="${'#edit_'+survey.id}">
+														<i class="fa fa-edit"></i>
+													</button>
+
+													<button class="btn btn-primary pull-right"
+														style="margin-left: 5px;" data-toggle="modal" th:data-target="${'#delete_'+survey.id}">
+														<i class="fa fa-trash"></i>
+													</button>
 											</span></td>
+											<div th:id="${'edit_'+survey.id}" class="modal fade">
+												<div class="modal-dialog modal-sm">
+													<form method="POST" class="editSurvey" th:id="${'editSurvey_'+survey.id}">
+														<div class="modal-content">
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal">&times;</button>
+																<h4 class="modal-title">
+																	<b>EDIT SURVEY DETAILS</b>
+																</h4>
+															</div>
+
+															<div class="modal-body">
+																<div class="row">
+																	<div class="col-sm-12">
+																		<div class="col-md-12">
+																			<div class="form-group">
+																				<label for="name"
+																					class="control-label text-semibold"> Survey
+																					Name <span class="text-danger">*</span>
+																				</label> <input type="text" name="name"
+																					class="form-control input-roundless"
+																					id="surveyName" required="required"
+																					th:value="${survey.name}" />
+																			</div>
+																		</div>
+																		<div class="col-md-12">
+																			<div class="form-group">
+																				<label for="description"
+																					class="control-label text-semibold"> Survey
+																					Description <span class="required">*</span>
+																				</label>
+																				<textarea rows="6" id="description"
+																					name="description"
+																					class="form-control input-roundless"
+																					th:text="${survey.description}"
+																					th:Value="${survey.description}"></textarea>
+																			</div>
+																		</div>
+
+																		<div class="col-md-6">
+																			<div class="form-group">
+																				<label for="eventDate"
+																					class="control-label text-semibold"> Survey
+																					Start Date <span class="text-danger">*</span>
+																				</label> <input type="date" name="openDate"
+																					class="form-control input-roundless" id="openDate"
+																					required="required" />
+																			</div>
+																		</div>
+																		<div class="col-md-6">
+																			<div class="form-group">
+																				<label for="eventDate"
+																					class="control-label text-semibold"> Survey
+																					End Date <span class="text-danger">*</span>
+																				</label> <input type="date" name="endDate"
+																					class="form-control input-roundless" id="endDate"
+																					required="required" />
+																			</div>
+																		</div>
+
+																		<input type="hidden" th:value="${survey.id}"
+																			name="surveyId" />
+
+
+
+																	</div>
+
+																</div>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-default"
+																	data-dismiss="modal">
+																	<i class="fa fa-close"></i>Cancel
+																</button>
+																<button type="submit" class="btn btn-primary">
+																	<i class="fa fa-check"></i>Submit
+																</button>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+
+											<div th:id="${'delete_'+survey.id}" class="modal fade">
+												<div class="modal-dialog modal-sm">
+													<form method="POST" th:id="${'deleteSurvey_'+survey.id}" class="deleteSurvey">
+														<div class="modal-content">
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal">&times;</button>
+																<h4 class="modal-title">
+																	<b>DELETE SURVEY</b>
+																</h4>
+															</div>
+
+															<div class="modal-body">
+																<div class="row">
+																	<div class="col-md-12">
+																		<h4>ARE YOU SURE YOU WANT TO DELETE THIS SURVEY?</h4>
+																	</div>
+																	<input type="hidden" th:value="${survey.id}"
+																		name="surveyId" id="surveyId" />
+																</div>
+															</div>
+															<div class="modal-footer">
+																<button type="button" class="btn btn-default"
+																	data-dismiss="modal">
+																	<i class="fa fa-close"></i>Cancel
+																</button>
+																<button type="submit" class="btn btn-primary">
+																	<i class="fa fa-check"></i>Submit
+																</button>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
 										</tr>
 									</tbody>
 

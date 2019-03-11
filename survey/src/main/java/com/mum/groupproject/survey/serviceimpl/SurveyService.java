@@ -33,7 +33,7 @@ public class SurveyService implements ISurvey{
 	public String update(Survey survey) {
 		try {
 			surveyDao.update(survey);
-			return Messages.delete;
+			return Messages.update;
 		} catch (Exception e) {
 			return Messages.exception;
 		}

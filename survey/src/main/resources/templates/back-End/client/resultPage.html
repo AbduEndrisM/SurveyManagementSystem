@@ -54,93 +54,22 @@
 					</h4> -->
 
 					<div class="row" style="margin-top: 5px;"></div>
-					<div class="panel panel-flat  border-top-primary" id="surveyList">
+					<div class="panel panel-flat  border-top-primary"  style="width:80%;margin:auto;">
 						<div class="panel-heading pt-20 pl-20">
-							<span class="panel-title" style="font-size: 20px;"> <span
-								class="text-semibold">Title : </span><span
-								th:text="${survey.name}"></span><br /> <span
-								class="text-semibold" style="margin-top: 2%;">Description
-									: </span><span th:text="${survey.description}"></span>
-							</span>
+							<span class="panel-title" style="font-size: 20px;">SUBMISSION SUCCESSFULL</span>
+							
 							<hr style="border: 1px solid black; background-color: black;" />
 
 						</div>
 
-						<div class="panel-body">
-							<form action="POST" id="submit_answers">
-								<div class="alert alert-primary alert-styled-left">
-
-
-									<span class="text-semibold">Warning!</span> All Question ending
-									with <b>*</b> are required
-
-								</div>
-								<div class="col-md-12" th:each="question : ${questions}"
-									style="border-bottom: 1px solid #E3F2FD; padding: 5px;">
-
-									<div class="form-group"
-										th:if="${question.key.questionType.name} == OE">
-										<label for="name" class="control-label text-semibold"
-											th:text="${question.key.name}"></label> <span
-											class="text-danger">*</span>
-										<textarea th:name="${'answer_'+question.key.id}"
-											class="form-control input-roundless" required="required"
-											rows=2></textarea>
-									</div>
-
-									<div class="form-group"
-										th:if="${question.key.questionType.name} == MC">
-
-
-										<label for="name" class="control-label text-semibold"
-											th:text="${question.key.name}"></label> <span
-											class="text-danger">*</span><br />
-										<div th:each="choice : ${question.value}">
-											<label class="radio-inline" th:if="${choice.choosen} == false"> <input type="radio"
-												th:name="${'answer_'+question.key.id}"
-												th:text="${choice.value}" th:value="${choice.value}">
-											</label>
-											<label class="radio-inline" th:if="${choice.choosen} == true"> <input type="radio"
-												th:name="${'answer_'+question.key.id}"
-												th:text="${choice.value}" th:value="${choice.value}" checked="checked">
-											</label>
-										</div>
-
-
-
-									</div>
-									<span style="color: #394f72 !important;" class="pull-right">rate
-										question <select class="select" style="height: 1%;"
-										th:name="${'rate_'+question.key.id}">
-											<option>0</option>
-											<option>1</option>
-											<option>2</option>
-											<option>3</option>
-											<option>4</option>
-											<option>5</option>
-									</select>
-
-									</span>
-
-
-
-
-
-
-								</div>
-								<input type="hidden" name="surveyId" th:value="${survey.id}"/>
-
-								<hr style="border: 1px solid black; background-color: black;" />
-								<div class="col-md-12 col-offset-4">
-									<span class="pull-right">
-										<button type="submit" class="btn btn-info btn-lg   btn-block"
-											style="border-radius: 0px; border-color: #90A4AE !important; background-color: #394f72;">
-											<b></b> Submit Survey <i class="fa fa-send pull-right"></i>
-										</button>
-									</span>
-								</div>
-							</form>
+						<div class="panel-body" style="font-size:150%;">
+							<div class="alert alert-success no-border">
+								
+								<span class="text-semibold">Well done!</span> You successfully submitted your survey,thanks for your participation  in this survey.
+							</div>
+							<a href="survey" class="btn btn-default text-bold"><i class="fa fa-arrow-left"></i>Go Back</a> 
 						</div>
+						
 						<div class="panel-footer"></div>
 
 

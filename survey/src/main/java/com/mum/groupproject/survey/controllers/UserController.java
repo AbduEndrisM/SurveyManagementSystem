@@ -44,7 +44,6 @@ public class UserController {
 			} else if (option.equals("logout")) {
 				session.removeAttribute("taker");
 				session.removeAttribute("admin");
-				session.invalidate();
 				result = "redirect:/";
 			}
 		} catch (Exception e) {
