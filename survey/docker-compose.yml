@@ -1,37 +1,38 @@
 version: '3'
-
 services:
-  mysql-server:
-    image: mysql/mysql-server
-    ports:
-       - 3306:3306
-    environment:
-      - MYSQL_ROOT_PASSWORD=hexakomb
-      - MYSQL_DATABASE=survey_system
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=hexakomb
 
-     
-
-     
-     
+  nginx:
+   container_name: some-nginx
+   image: nginx:1.13
+   restart: always
+   ports:
+   - 80:80
+   - 443:443
+   volumes:
+   - ./nginx/conf.d:/etc/nginx/conf.d
+   depends_on:
+   - app
+  
+  mysql:
+   container_name: some-mysql
+   image: mysql/mysql-server:5.7
+   environment:
+    MYSQL_DATABASE: test
+    MYSQL_ROOT_PASSWORD: hellokoding
+    MYSQL_ROOT_HOST: '%'
+   ports:
+   - "3306:3306"
+   restart: always
+  
+  app:
+    restart: always
+    build: ./app
+    working_dir: /app
     volumes:
-      - /data/mysql
-  survey:
-    image: survey
-    build:
-      context: ./
-      dockerfile: Dockerfile
+      - .:/app
+    expose:
+      - "8080"
+    command: mvn clean spring-boot:run
     depends_on:
-      - mysql-server
-     
-    environment:
-      - DATABASE_HOST =mysql-server
-      - DATABASE_USER =root
-      - DATABASE_PASSWORD =hexakomb
-      - DATABASE_NAME =survey_system
-      - DATABASE_PORT =3306
+      - mysql
       
-   
-    volumes: 
-      - /data/survey

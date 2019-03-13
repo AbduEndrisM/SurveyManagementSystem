@@ -1,4 +1,4 @@
-/*// Sliced 3D donut chart
+ /*// Sliced 3D donut chart
 // ------------------------------
 // Initialize chart
 google.load("visualization", "1", {packages:["corechart"]});
@@ -66,7 +66,7 @@ function drawDonut(selectedId) {
 
 	var riskada = [];
 	$.ajax({
-		url : 'http://localhost:9000/admin/dashboardJson/' + selectedId,
+		url : 'http://localhost:8080/admin/dashboardJson/' + selectedId,
 		type : 'POST',
 		data : {
 			option : selectedId

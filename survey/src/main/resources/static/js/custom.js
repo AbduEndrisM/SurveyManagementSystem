@@ -185,7 +185,7 @@ function createSurvey() {
 	var formData = {};
 	formData = $('#new_survey').serialize();
 	$.ajax({
-		url : 'http://localhost:9000/formSubmission/survey',
+		url : 'http://localhost:8080/formSubmission/survey',
 		method : 'POST',
 		data : formData,
 		success : function(data) {
@@ -215,7 +215,7 @@ function editSurvey(surveyId) {
 	var formData = {};
 	formData = $('#' + surveyId).serialize();
 	$.ajax({
-		url : 'http://localhost:9000/formSubmission/editSurvey',
+		url : 'http://localhost:8080/formSubmission/editSurvey',
 		method : 'POST',
 		data : formData,
 		success : function(data) {
@@ -245,7 +245,7 @@ function deleteSurvey(surveyId) {
 	var formData = {};
 	formData = $('#' + surveyId).serialize();
 	$.ajax({
-		url : 'http://localhost:9000/formSubmission/deleteSurvey',
+		url : 'http://localhost:8080/formSubmission/deleteSurvey',
 		method : 'POST',
 		data : formData,
 		success : function(data) {
@@ -275,7 +275,7 @@ function publishData(choosenValue) {
 	var element = '';
 	$
 			.ajax({
-				url : 'http://localhost:9000/formSubmission/openQuestions_'
+				url : 'http://localhost:8080/formSubmission/openQuestions_'
 						+ choosenValue,
 				method : 'POST',
 				data : choosenValue,
@@ -297,7 +297,7 @@ function publishData(choosenValue) {
 function createQuestion() {
 	var formData = {};
 	formData = $('#new_question').serialize();
-	var url1 = 'http://localhost:9000/formSubmission/question'
+	var url1 = 'http://localhost:8080/formSubmission/question'
 	$.ajax({
 		url : url1,
 		method : 'POST',
@@ -329,7 +329,7 @@ function deleteQuestion(questionId) {
 	var formData = {};
 	formData = $('#' + questionId).serialize();
 	$.ajax({
-		url : 'http://localhost:9000/formSubmission/deleteQuestion',
+		url : 'http://localhost:8080/formSubmission/deleteQuestion',
 		method : 'POST',
 		data : formData,
 		success : function(data) {
@@ -358,7 +358,7 @@ function deleteQuestion(questionId) {
 function updateQuestion(questionId) {
 	var formData = {};
 	formData = $('#' + questionId).serialize();
-	var url1 = 'http://localhost:9000/formSubmission/editQuestion'
+	var url1 = 'http://localhost:8080/formSubmission/editQuestion'
 	$.ajax({
 		url : url1,
 		method : 'POST',
@@ -390,7 +390,7 @@ function createChoice() {
 	var formData = {};
 	formData = $('#choiceForm').serialize();
 	$.ajax({
-		url : 'http://localhost:9000/formSubmission/choice',
+		url : 'http://localhost:8080/formSubmission/choice',
 		method : 'POST',
 		data : formData,
 		success : function(data) {
